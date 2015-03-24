@@ -1,0 +1,25 @@
+{
+  "name": "clever",
+  "description": "Clever: a framework helping you build web applications quickly. It is designed to give you a quick and organized way to start developing node.js based web apps with useful modules like Mongoose and Passport pre-bundled and configured.",
+  "version": "0.0.1",
+  "private": false,
+  "author": "Jacopo Daeli <jacopo.daeli@gmail.com>",
+  "contributors": "https://github.com/imperodesign/clever/graphs/contributors",
+  "clever": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/impero/clever.git"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.3.x"
+  },
+  "scripts": {
+    "start": "node server",
+    "postinstall": ""
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
