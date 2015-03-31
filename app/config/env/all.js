@@ -1,6 +1,6 @@
 'use strict';
 
-let parh = require('path');
+let path = require('path');
 let rootPath = path.normalize(`${__dirname}/../..`);
 
 module.exports = {

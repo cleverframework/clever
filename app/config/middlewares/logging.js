@@ -1,6 +1,6 @@
 // globals require
 
-(function {
+(function () {
   'use strict';
 
   let morgan = require('morgan');
