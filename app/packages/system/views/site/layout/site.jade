@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    include ../components/head.jade
+  body
+    nav(class="navbar navbar-inverse navbar-fixed-top")
+      div(class="container")
+        div(class="navbar-header")
+          button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar")
+            span(class="sr-only") Toggle navigation
+            span(class="icon-bar")
+            span(class="icon-bar")
+            span(class="icon-bar")
+          a(class="navbar-brand" href="") Impero CMS
+        div(id="navbar" class="collapse navbar-collapse")
+          ul(class="nav navbar-nav")
+            li(class="")
+              a(href="") Home
+          ul(class="nav navbar-nav navbar-right")
+            li(class="")
+              a(href="/login") Login
+            li(class="")
+              a(href="/signup") Signup
+
+    div(class="container")
+      block content
+
+    //- JS
+    script(src="https://code.jquery.com/jquery-1.11.2.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+    script(src="/public/system/site/js/app.js")
