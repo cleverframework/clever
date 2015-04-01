@@ -36,6 +36,6 @@ module.exports = function(app, db) {
   app.use(flash());
 
   // Csfr token
-  app.use(csrf());
+  // app.use(csrf());
 
 };
