@@ -36,12 +36,16 @@ exports.signin = function(req, res) {
 
 // Show user register form
 exports.register = function(UserPackage, req, res) {
-  res.send(UserPackage.render('site/register'));
+  res.send(UserPackage.render('site/register', {
+    csrfToken: req.csrfToken()
+  }));
 };
 
 // Show user login form
 exports.login = function(UserPackage, req, res) {
-  res.send(UserPackage.render('site/login'));
+  res.send(UserPackage.render('site/login', {
+    csrfToken: req.csrfToken()
+  }));
 };
 
 // Logout

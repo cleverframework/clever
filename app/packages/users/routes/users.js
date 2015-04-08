@@ -34,9 +34,9 @@ module.exports = function(UserPackage, app, auth, database, passport) {
   router.post('/login', passport.authenticate('local', {
       failureFlash: true
     }), function(req, res) {
+      console.log('ok')
       res.send({
-        user: req.user,
-        redirect: (req.user.roles.indexOf('admin') !== -1) ? req.get('referer') : false
+        user: req.user
       });
     });
 
