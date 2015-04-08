@@ -39,7 +39,6 @@ module.exports = function(UserPackage, app, auth, database, passport) {
   // Delete user
   router.delete('/:id', usersApiCtrl.deleteUserById);
 
-
   return new CleverCore.CleverRoute(router, 'api', false);
 
 };

@@ -30,15 +30,12 @@ module.exports = function(UserPackage, app, auth, database, passport) {
   // Show login form
   router.get('/login', usersCtrl.login.bind(null, UserPackage));
 
-  // Setting the local strategy route
+  // Login with local strategy
   router.post('/login', passport.authenticate('local', {
-      failureFlash: true
-    }), function(req, res) {
-      console.log('ok')
-      res.send({
-        user: req.user
-      });
-    });
+		successRedirect: '/',
+		failureRedirect: '/login',
+		failureFlash : true
+	}));
 
   // Setting the facebook oauth routes
   router.get('/auth/facebook', passport.authenticate('facebook', {

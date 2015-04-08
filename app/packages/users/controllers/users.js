@@ -44,7 +44,8 @@ exports.register = function(UserPackage, req, res) {
 // Show user login form
 exports.login = function(UserPackage, req, res) {
   res.send(UserPackage.render('site/login', {
-    csrfToken: req.csrfToken()
+    csrfToken: req.csrfToken(),
+    message: req.flash('error')
   }));
 };
 
