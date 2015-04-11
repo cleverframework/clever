@@ -1,16 +1,25 @@
 import config from './config';
+import events from 'events';
+
+class App extends events.EventEmitter {
+  constructor() {
+    super();
+  }
+}
 
 // controllers
-import ctrl from './controllers/ctrl';
+import listener from './controllers/listeners';
+import register from './controllers/register';
 
-let app = window.app = {};
+let app = window.app = new App();
 
 // config
 config(app);
 
 // ctrls
-ctrl(app);
+listener(app);
+register(app);
 
 $(document).ready(() => {
-  console.log(`${app.config.name} started`);
+  app.emit('appStarted');
 });

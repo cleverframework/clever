@@ -2,7 +2,7 @@ extends ../../../system/views/site/layout/site
 
 block content
 	.container
-		form.form-signin(action='/register', method='POST')
+		form.form-signin(id="createUser", action='/api/users', method='POST')
 			h2.form-signin-heading Please sign up
 			label.sr-only(for='inputFirstName') Firstname
 			input#inputEmail.form-control(type='text', name='firstName', placeholder='Firstname', required='', autofocus='')
@@ -17,13 +17,13 @@ block content
 					input(type='checkbox', value='automatic-login', checked='checked')
 					|	Automatic login
 			input(type="hidden", name="_csrf", value="#{csrfToken}")
-			button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
+			button.btn.btn-lg.btn-primary.btn-block(id="createUserBtn", type='submit') Sign in
 			br
-			if message != ''
-				div(class="alert alert-danger", role="alert")
-					b
-						|	Ops!
-					|  #{message}.
+			div#createUserError(class="alert alert-danger hidden", role="alert")
+				b
+					|	Ops! 
+				span.message
+					| No Errors
 			p
 				a(href='/users/forgot', class='') Forgot your password?
 			p
@@ -31,3 +31,6 @@ block content
 
 block appendcss
 	link(rel='stylesheet', href='/public/users/site/index.css')
+		
+block appendjs
+	script(src='/public/users/site/index.js')
