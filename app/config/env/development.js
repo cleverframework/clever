@@ -15,8 +15,8 @@ module.exports = {
   },
   cookieDomain: '.impero-cms.dev',
   facebook: {
-    clientID: 'DEFAULT_APP_ID',
-    clientSecret: 'APP_SECRET',
+    clientID: '570817389722371',
+    clientSecret: '244f599f92257ffa3cb2a647d1dc1226',
     callbackURL: 'http://localhost:3000/auth/facebook/callback'
   },
   twitter: {

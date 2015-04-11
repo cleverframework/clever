@@ -45,7 +45,7 @@ exports.register = function(UserPackage, req, res) {
 exports.login = function(UserPackage, req, res) {
   res.send(UserPackage.render('site/login', {
     csrfToken: req.csrfToken(),
-    message: req.flash('error')
+    message: req.flash('error'),
   }));
 };
 

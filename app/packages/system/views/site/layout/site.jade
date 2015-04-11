@@ -17,10 +17,15 @@ html
             li(class="")
               a(href="") Home
           ul(class="nav navbar-nav navbar-right")
-            li(class="")
-              a(href="/login") Login
-            li(class="")
-              a(href="/register") Signup
+            if user
+              li(class="")
+                a(href="/dashboard") #{user.firstName} #{user.lastName}
+            else    
+              li(class="")
+                a(href="/login") Login
+              li(class="")
+                a(href="/register") Signup
+            
 
     div(class="container")
       block content
