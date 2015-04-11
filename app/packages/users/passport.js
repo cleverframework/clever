@@ -70,8 +70,8 @@ module.exports = function(passport) {
           return done(err, user);
         }
         user = new User({
-          name: profile.displayName,
-          username: profile.username,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
           provider: 'twitter',
           twitter: profile._json,
           roles: ['authenticated']
@@ -97,6 +97,9 @@ module.exports = function(passport) {
       callbackURL: config.facebook.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
+
+      console.log(profile)
+
       User.findOne({
         'facebook.id': profile.id
       }, function(err, user) {
@@ -107,9 +110,9 @@ module.exports = function(passport) {
           return done(err, user);
         }
         user = new User({
-          name: profile.displayName,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
           email: profile.emails[0].value,
-          username: profile.username || profile.emails[0].value.split('@')[0],
           provider: 'facebook',
           facebook: profile._json,
           roles: ['authenticated']
@@ -142,9 +145,9 @@ module.exports = function(passport) {
           return done(err, user);
         }
         user = new User({
-          name: profile.displayName,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
           email: profile.emails[0].value,
-          username: profile.username,
           provider: 'github',
           github: profile._json,
           roles: ['authenticated']
@@ -177,9 +180,9 @@ module.exports = function(passport) {
           return done(err, user);
         }
         user = new User({
-          name: profile.displayName,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
           email: profile.emails[0].value,
-          username: profile.emails[0].value,
           provider: 'google',
           google: profile._json,
           roles: ['authenticated']
@@ -213,9 +216,9 @@ module.exports = function(passport) {
           return done(err, user);
         }
         user = new User({
-          name: profile.displayName,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
           email: profile.emails[0].value,
-          username: profile.emails[0].value,
           provider: 'linkedin',
           roles: ['authenticated']
         });
