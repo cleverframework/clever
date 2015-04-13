@@ -9,7 +9,11 @@ var SystemPackage = new Package('system');
 // All CLEVER packages require registration
 SystemPackage.register(function(app, database) {
 
-  SystemPackage.routes(app, database);
+  SystemPackage.auth = require('./authorization');
+
+  cleverCore.register('auth', SystemPackage.auth);
+
+  SystemPackage.routes(app, SystemPackage.auth, database);
 
   return SystemPackage;
 

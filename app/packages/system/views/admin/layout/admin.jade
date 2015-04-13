@@ -31,10 +31,10 @@ html
         .col-sm-3.col-md-2.sidebar
           h3 Modules
           ul.nav.nav-sidebar
-            li
-              a(href="/homepages") Pages
-            li
-              a(href="/articles") Articles
+            each pkg, index in packages
+              if pkg.visible
+                li
+                  a(href="/#{pkg.name}") #{pkg.name}
 
         .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
           block content

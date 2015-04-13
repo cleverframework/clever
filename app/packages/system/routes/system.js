@@ -13,7 +13,7 @@ let config = CleverCore.loadConfig();
 let systemCtrl = require('../controllers/system');
 
 // Exports
-module.exports = function(SystemPackage, app, database) {
+module.exports = function(SystemPackage, app, auth, database) {
 
   router.get('/', systemCtrl.index.bind(null, SystemPackage));
 

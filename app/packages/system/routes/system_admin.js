@@ -13,9 +13,9 @@ let config = CleverCore.loadConfig();
 let systemCtrl = require('../controllers/system_admin');
 
 // Exports
-module.exports = function(SystemPackage, app, database) {
+module.exports = function(SystemPackage, app, auth, database) {
 
-  router.get('/', systemCtrl.index.bind(null, SystemPackage));
+  router.get('/', auth.requiresAdmin, systemCtrl.index.bind(null, SystemPackage));
 
   return new CleverCore.CleverRoute(router, 'admin', true);
 

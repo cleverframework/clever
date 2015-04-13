@@ -8,14 +8,11 @@ let Package = cleverCore.Package;
 let UsersPackage = new Package('users');
 
 // Package registration
-UsersPackage.register(function(app, database, passport) {
+UsersPackage.register(function(app, auth, database, passport) {
 
-  UsersPackage.auth = require('./authorization');
   require('./passport')(passport);
 
-  cleverCore.register('auth', UsersPackage.auth);
-
-  UsersPackage.routes(app, UsersPackage.auth, database, passport);
+  UsersPackage.routes(app, auth, database, passport);
 
   return UsersPackage;
 
