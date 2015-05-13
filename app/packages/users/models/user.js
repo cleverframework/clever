@@ -1,18 +1,19 @@
 'use strict';
 
 // Module dependencies.
-let mongoose = require('mongoose');
-let Schema  = mongoose.Schema;
-let crypto = require('crypto');
-let _ = require('lodash');
+const mongoose = require('mongoose');
+const Schema  = mongoose.Schema;
+const crypto = require('crypto');
+const _ = require('lodash');
+const Q = require('q');
 
 // Validations
-let validatePresenceOf = function(value) {
+function validatePresenceOf(value) {
   // Don't validate if authenticated by any of the oauth strategies
   return (this.provider && this.provider !== 'local') || (value && value.length);
 };
 
-let validateUniqueEmail = function(value, callback) {
+function validateUniqueEmail(value, callback) {
   let User = mongoose.model('User');
   User.find({
     $and: [{
@@ -28,7 +29,7 @@ let validateUniqueEmail = function(value, callback) {
 };
 
 // Getter
-let escapeProperty = function(value) {
+function escapeProperty(value) {
   return _.escape(value);
 };
 
@@ -92,7 +93,89 @@ UserSchema.pre('save', function(next) {
   next();
 });
 
-// Methods
+// Static Methods
+UserSchema.statics = {
+  /**
+   * GetUsers - return the list of users
+   *
+   * @param {Integer} start
+   * @param {Integer} limit
+   * @return {Object}
+   * @api public
+   */
+  getUsers: function(start, limit) {
+    const User = mongoose.model('User');
+    const options = start && limit ? {skip: start, limit: limit} : {};
+    const defer = Q.defer();
+    User.find({}, {}, options, function(err, users) {
+      if (err) return defer.reject(err);
+      console.log(users)
+      return defer.resolve(users);
+    });
+    return defer.promise;
+  },
+
+  /**
+   * GetUserById - return the list of users
+   *
+   * @param {String} id
+   * @return {Object}
+   * @api public
+   */
+  getUserById: function(id) {
+    if(!id) throw new Error('User.getUserById: id parameter is mandatory');
+    const User = mongoose.model('User');
+    const defer = Q.defer();
+    User.find({_id: id}, function(err, user) {
+      if (err) return defer.reject(err);
+      return defer.resolve(user);
+    });
+    return defer.promise;
+  },
+
+  createUser: function(userParams) {
+    const user = new User(userParams);
+    user.provider = 'local';
+
+    // TODO: User permission
+    // TODO: if no user in the database, register it as admin
+    user.roles = ['authenticated'];
+
+    const defer = Q.defer();
+    user.save(function(err) {
+      if (err) {
+        let modelErrors = [];
+        switch (err.code) {
+          case 11000: {}
+          case 11001: {
+            modelErrors.push({
+              msg: 'Username already taken',
+              param: 'username'
+            });
+            break;
+          }
+          default: {
+            if (err.errors) {
+              for (var x in err.errors) {
+                modelErrors.push({
+                  param: x,
+                  msg: err.errors[x].message,
+                  value: err.errors[x].value
+                });
+              }
+            }
+          }
+        }
+        return defer.reject(modelErrors);
+      }
+      defer.resolve(user);
+    });
+
+    return defer.promise;
+  }
+}
+
+// Instance Methods
 UserSchema.methods = {
 
   /**
@@ -147,7 +230,7 @@ UserSchema.methods = {
    */
   hashPassword: function(password) {
     if (!password || !this.salt) return '';
-    let salt = new Buffer(this.salt, 'base64');
+    const salt = new Buffer(this.salt, 'base64');
     return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
   },
 

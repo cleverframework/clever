@@ -15,13 +15,13 @@ html
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
             li
-              a(href="/") Dashboard
+              a(href="/admin") Dashboard
             li
-              a(href="/settings") Settings
+              a(href="/admin/settings") Settings
             li
-              a(href="/users") Users
+              a(href="/admin/users") Users
             li
-              a(href="/help") Help
+              a(href="/admin/help") Help
           //
             form.navbar-form.navbar-right
               input.form-control(type="text", placeholder="Search...")
@@ -31,6 +31,9 @@ html
         .col-sm-3.col-md-2.sidebar
           h3 Modules
           ul.nav.nav-sidebar
+            if packages.length == 2
+              li
+                a No modules installed yet
             each pkg, index in packages
               if pkg.visible
                 li
