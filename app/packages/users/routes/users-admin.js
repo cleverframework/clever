@@ -10,7 +10,7 @@ let CleverCore = require('clever-core');
 let config = CleverCore.loadConfig();
 
 // Load controller
-let usersCtrl = require('../controllers/users_admin');
+let usersCtrl = require('../controllers/users-admin');
 
 // Exports
 module.exports = function(UserPackage, app, auth, database, passport) {

@@ -24,7 +24,7 @@
     "pretest": "npm install",
     "test": "./node_modules/mocha-6to5/bin/mocha test",
     "prestart": "npm install",
-    "start": "node app/server"
+    "start": "node --harmony app/server"
   },
   "dependencies": {
     "async": "^0.9.0",
