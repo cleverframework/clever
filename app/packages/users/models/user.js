@@ -7,6 +7,37 @@ const crypto = require('crypto');
 const _ = require('lodash');
 const Q = require('q');
 
+// Mongoose Error Handling
+function hasErrors(err) {
+  if (err) {
+    let modelErrors = [];
+    switch (err.code) {
+      case 11000: {}
+      case 11001: {
+        modelErrors.push({
+          msg: 'Username already taken',
+          param: 'username'
+        });
+        break;
+      }
+      default: {
+        if (err.errors) {
+          for (var x in err.errors) {
+            modelErrors.push({
+              param: x,
+              msg: err.errors[x].message,
+              value: err.errors[x].value
+            });
+          }
+        }
+      }
+    }
+    return modelErrors;
+  }
+
+  return null;
+}
+
 // Validations
 function validatePresenceOf(value) {
   // Don't validate if authenticated by any of the oauth strategies
@@ -109,14 +140,13 @@ UserSchema.statics = {
     const defer = Q.defer();
     User.find({}, {}, options, function(err, users) {
       if (err) return defer.reject(err);
-      console.log(users)
       return defer.resolve(users);
     });
     return defer.promise;
   },
 
   /**
-   * GetUserById - return the list of users
+   * GetUserById - return the user matching the id
    *
    * @param {String} id
    * @return {Object}
@@ -126,7 +156,58 @@ UserSchema.statics = {
     if(!id) throw new Error('User.getUserById: id parameter is mandatory');
     const User = mongoose.model('User');
     const defer = Q.defer();
-    User.find({_id: id}, function(err, user) {
+    User.findOne({_id: id}, function(err, user) {
+      if (err) return defer.reject(err);
+      return defer.resolve(user);
+    });
+    return defer.promise;
+  },
+
+  /**
+   * EditUserById - edit the user matching the id
+   *
+   * @param {String} id
+   * @return {Object}
+   * @api public
+   */
+  editUserById: function(id, userParams) {
+    if(!id) throw new Error('User.editUserById: id parameter is mandatory');
+    const User = mongoose.model('User');
+    const defer = Q.defer();
+
+    function save(user) {
+      Object.keys(userParams).forEach(function (key, index) {
+        if(key==='admin' && userParams[key] === '1') return user['role'].push('admin');
+        user[key] = userParams[key];
+      });
+      user.save(function(err) {
+        const errors = hasErrors(err);
+        if(errors) return defer.reject(errors);
+        defer.resolve(user);
+      });
+    }
+
+    User.getUserById(id)
+      .then(save)
+      .catch(function(err) {
+        defer.reject(err);
+      });
+
+    return defer.promise;
+  },
+
+  /**
+   * DeleteUserById - delete the user matching the id
+   *
+   * @param {String} id
+   * @return {Object}
+   * @api public
+   */
+  deleteUserById: function(id) {
+    if(!id) throw new Error('User.deleteUserById: id parameter is mandatory');
+    const User = mongoose.model('User');
+    const defer = Q.defer();
+    User.remove({_id: id}, function(err, user) {
       if (err) return defer.reject(err);
       return defer.resolve(user);
     });
@@ -134,40 +215,25 @@ UserSchema.statics = {
   },
 
   createUser: function(userParams) {
+    const User = mongoose.model('User');
+    const roles = ['authenticated'];
+
+    if(userParams.admin === '1') {
+      delete userParams.admin;
+      roles.push('admin');
+    }
+
     const user = new User(userParams);
     user.provider = 'local';
 
     // TODO: User permission
     // TODO: if no user in the database, register it as admin
-    user.roles = ['authenticated'];
+    user.roles = roles;
 
     const defer = Q.defer();
     user.save(function(err) {
-      if (err) {
-        let modelErrors = [];
-        switch (err.code) {
-          case 11000: {}
-          case 11001: {
-            modelErrors.push({
-              msg: 'Username already taken',
-              param: 'username'
-            });
-            break;
-          }
-          default: {
-            if (err.errors) {
-              for (var x in err.errors) {
-                modelErrors.push({
-                  param: x,
-                  msg: err.errors[x].message,
-                  value: err.errors[x].value
-                });
-              }
-            }
-          }
-        }
-        return defer.reject(modelErrors);
-      }
+      const errors = hasErrors(err);
+      if(errors) return defer.reject(errors);
       defer.resolve(user);
     });
 
@@ -187,7 +253,7 @@ UserSchema.methods = {
    */
   hasRole: function(role) {
     let roles = this.roles;
-    return roles.indexOf('admin') !== -1 || roles.indexOf(role) !== -1;
+    return roles.indexOf(role) !== -1;
   },
 
   /**

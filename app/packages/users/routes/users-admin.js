@@ -16,13 +16,13 @@ let usersCtrl = require('../controllers/users-admin');
 module.exports = function(UserPackage, app, auth, database, passport) {
 
   // Show registration form
-  router.get('/', usersCtrl.showUsers.bind(null, UserPackage));
+  router.get('/', auth.requiresAdmin, usersCtrl.showUsers.bind(null, UserPackage));
 
-  router.get('/create', usersCtrl.createUser.bind(null, UserPackage));
+  router.get('/create', auth.requiresAdmin, usersCtrl.createUser.bind(null, UserPackage));
 
-  router.get('/:userId', usersCtrl.showUser.bind(null, UserPackage));
+  router.get('/:id', auth.requiresAdmin, usersCtrl.showUser.bind(null, UserPackage));
 
-  router.get('/:userId/edit', usersCtrl.editUser.bind(null, UserPackage));
+  router.get('/:id/edit', auth.requiresAdmin, usersCtrl.editUser.bind(null, UserPackage));
 
   return new CleverCore.CleverRoute(router, 'admin', false);
 

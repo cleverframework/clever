@@ -46,24 +46,22 @@ exports.createUser = function(req, res, next) {
     return res.status(400).json(errors);
   }
 
-  function automaticLogin(user) {
-    req.logIn(user, function(err) {
-      if (err) return next(err);
-      return res.status(200).json(user);
-    });
-  }
-
   User.createUser(req.body)
-    .then(automaticLogin)
+    .then(util.sendObjectAsHttpResponse.bind(null, res, 201))
     .catch(util.sendObjectAsHttpResponse.bind(null, res, 400));
 };
 
 // Edit user by id
 exports.editUserById = function(req, res, next) {
-  res.send('edit by id');
+  // TODO: validation
+  User.editUserById(req.params.id, req.body)
+    .then(util.sendObjectAsHttpResponse.bind(null, res, 202))
+    .catch(util.sendObjectAsHttpResponse.bind(null, res, 400));
 };
 
 // Delete user by id
 exports.deleteUserById = function(req, res, next) {
-  res.send('delete by id');
+  User.deleteUserById(req.params.id)
+    .then(util.sendObjectAsHttpResponse.bind(null, res, 202))
+    .catch(util.passNext.bind(null, next));
 };

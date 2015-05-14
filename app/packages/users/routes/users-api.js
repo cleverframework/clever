@@ -31,13 +31,13 @@ module.exports = function(UserPackage, app, auth, database, passport) {
   router.get('/:id', usersApiCtrl.getUserById);
 
   // Create new user
-  router.post('/', usersApiCtrl.createUser);
+  router.post('/', auth.requiresAdmin, usersApiCtrl.createUser);
 
   // Edit user
-  router.put('/:id', usersApiCtrl.editUserById);
+  router.put('/:id', auth.requiresAdmin, usersApiCtrl.editUserById);
 
   // Delete user
-  router.delete('/:id', usersApiCtrl.deleteUserById);
+  router.delete('/:id', auth.requiresAdmin, usersApiCtrl.deleteUserById);
 
   return new CleverCore.CleverRoute(router, 'api', false);
 

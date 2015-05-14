@@ -18,8 +18,24 @@ html
               a(href="") Home
           ul(class="nav navbar-nav navbar-right")
             if user
-              li(class="")
-                a(href="/admin") #{user.firstName} #{user.lastName}
+              li.dropdown
+                a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
+                  | #{user.firstName} #{user.lastName} 
+                  span.caret
+                  |                 
+                  ul.dropdown-menu(role="menu")
+                    if user.isAdmin()
+                      li(class="")
+                        a(href="/admin") Administration
+                    li
+                      a(href="#") Profile
+                    |                   
+                    li
+                      a(href="#") Account
+                    |                                   
+                    li.divider
+                    li
+                      a(href="/logout") Logout
             else    
               li(class="")
                 a(href="/login") Login

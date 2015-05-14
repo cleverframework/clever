@@ -18,6 +18,9 @@ module.exports = function(UserPackage, app, auth, database, passport) {
   // Show registration form
   router.get('/register', usersCtrl.register.bind(null, UserPackage));
 
+  // Create user
+  router.post('/register', usersCtrl.createUser.bind(null, UserPackage));
+
   // Logout user
   router.get('/logout', usersCtrl.signout);
 

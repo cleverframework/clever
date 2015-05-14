@@ -46,10 +46,10 @@ block content
                 |   
                 ul.dropdown-menu(role='menu')
                   li
-                    a(href='#') Edit
+                    a(href='/admin/users/#{user._id}/edit') Edit
                   |     
                   li
-                    a(href='#') Delete
+                    a.deleteUser(href='#', data-id="#{user._id}") Delete
 
     tfoot
       tr
@@ -65,3 +65,10 @@ block content
           | Provider
         th 
           | 
+  
+  a(href="/admin/users/create").btn.btn-primary Create
+
+block appendjs
+  script.
+    window.csrf = '#{csrfToken}';
+  script(src="/public/users/admin/index.js")

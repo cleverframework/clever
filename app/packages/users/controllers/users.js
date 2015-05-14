@@ -1,13 +1,14 @@
 'use strict';
 
 // Module dependencies.
-let mongoose = require('mongoose');
-let User = mongoose.model('User');
-let async = require('async');
-let config = require('clever-core').loadConfig();
-let crypto = require('crypto');
-let nodemailer = require('nodemailer');
-let templates = require('../template');
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+const async = require('async');
+const config = require('clever-core').loadConfig();
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const templates = require('../template');
+const util = require('../util');
 
 // Find user by id
 exports.user = function(req, res, next, id) {
@@ -42,6 +43,35 @@ exports.register = function(UserPackage, req, res) {
   res.send(UserPackage.render('site/register', {
     csrfToken: req.csrfToken()
   }));
+};
+
+// Create user
+exports.createUser = function(UserPackage, req, res, next) {
+
+  // because we set our user.provider to local our models/user.js validation will always be true
+  req.assert('firstName', 'You must enter your first name').notEmpty();
+  req.assert('lastName', 'You must enter your last name').notEmpty();
+  req.assert('firstName', 'Firstname cannot be more than 32 characters').len(1, 32);
+  req.assert('lastName', 'Lastname cannot be more than 32 characters').len(1, 32);
+  req.assert('email', 'You must enter a valid email address').isEmail();
+  req.assert('password', 'Password must be between 8-20 characters long').len(8, 20);
+  // req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+
+  const errors = req.validationErrors();
+  if (errors) {
+    return res.status(400).json(errors);
+  }
+
+  function automaticLogin(user) {
+    req.logIn(user, function(err) {
+      if (err) return next(err);
+      return res.status(200).json(user);
+    });
+  }
+
+  User.createUser(req.body)
+    .then(automaticLogin)
+    .catch(util.sendObjectAsHttpResponse.bind(null, res, 400));
 };
 
 // Show user login form

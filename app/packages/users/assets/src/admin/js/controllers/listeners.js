@@ -5,6 +5,7 @@ export default (app) => {
   });
 
   app.on('createUser', (form) => {
+
     const $createUserError = $('#createUserError');
     const $createUserErrorMessage = $('#createUserError .message');
     const postData = $(form).serialize();
@@ -19,7 +20,7 @@ export default (app) => {
       type: 'POST',
       data : postData,
       success:function(data, textStatus, jqXHR) {
-        location.href = '/';
+        location.href = `/admin/users/${data._id}`;
       },
       error: function(jqXHR, textStatus, errorThrown) {
         // Show the errors to the user
@@ -33,6 +34,31 @@ export default (app) => {
 
     // Disable the submit form button
     $createUserBtn.addClass('disabled');
+    
+  });
+
+  app.on('deleteUser', (btn) => {
+
+    if(!confirm('Are you sure to want delete this user?')) return false;
+
+    const $btn = $(btn);
+
+    const request = $.ajax({
+      url: `/api/users/${$btn.data('id')}`,
+      beforeSend: function (request) {
+        request.setRequestHeader('csrf-token', window.csrf);
+      },
+      method: 'DELETE'
+    });
+
+    request.done(function(msg) {
+      location.reload();
+    });
+
+    request.fail(function( jqXHR, textStatus ) {
+      console.error(`Request failed: ${textStatus}`);
+    });
+
   });
 
   return app;
