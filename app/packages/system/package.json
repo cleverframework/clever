@@ -6,7 +6,9 @@
     "name": "Jacopo Daeli <jacopo.daeli@gmail.com>"
   },
   "clever": "0.0.x",
-  "dependencies": {
-  },
-  "license": "MIT"
+  "dependencies": {},
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.8.11"
+  }
 }

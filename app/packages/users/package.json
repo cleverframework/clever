@@ -18,5 +18,8 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.3"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.8.11"
+  }
 }
