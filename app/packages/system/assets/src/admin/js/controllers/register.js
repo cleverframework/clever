@@ -10,16 +10,16 @@ export default (app) => {
     app.emit(eventName, this);
   }
 
-  $('.deleteUser').click(function(e) {
-    callListener.call(this, e, 'deleteUser');
+  $('.deleteSetting').click(function(e) {
+    callListener.call(this, e, 'deleteSetting');
   });
 
-  $('#createUser').submit(function(e) {
-    callListener.call(this, e, 'createUser');
+  $('#createSetting').submit(function(e) {
+    callListener.call(this, e, 'createSetting');
   });
 
-  $('#editUser').submit(function(e) {
-    callListener.call(this, e, 'editUser');
+  $('#editSetting').submit(function(e) {
+    callListener.call(this, e, 'editSetting');
   });
 
   return app;

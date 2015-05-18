@@ -22,7 +22,7 @@ module.exports = function(UserPackage, app, auth, database, passport) {
 
   router.get('/:id', auth.requiresAdmin, usersCtrl.showUser.bind(null, UserPackage));
 
-  router.get('/:id/edit', auth.requiresAdmin, usersCtrl.editUser.bind(null, UserPackage));
+  router.get('/:id/edit/:opt?', auth.requiresAdmin, usersCtrl.editUser.bind(null, UserPackage));
 
   return new CleverCore.CleverRoute(router, 'admin', false);
 

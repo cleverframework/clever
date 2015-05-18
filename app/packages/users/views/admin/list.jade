@@ -1,6 +1,7 @@
 extends ../../../system/views/admin/layout/admin
 
 block content
+    
   h1.page-header
     | Users: 
     span(style="color: #666") List
@@ -40,16 +41,19 @@ block content
             | #{user.provider}
           td
             .btn-group
-                button.btn.btn-info.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='false')
+                button.btn.btn-info.dropdown-toggle(type="button", data-toggle="dropdown", aria-expanded="false")
                   | Modify 
                   span.caret
                 |   
-                ul.dropdown-menu(role='menu')
+                ul.dropdown-menu(role="menu")
                   li
-                    a(href='/admin/users/#{user._id}/edit') Edit
+                    a(href="/admin/users/#{user._id}/edit") Edit
+                  | 
+                  li
+                    a(href="/admin/users/#{user._id}/edit/change-password") Change Password
                   |     
                   li
-                    a.deleteUser(href='#', data-id="#{user._id}") Delete
+                    a.deleteUser(href="#", data-id="#{user._id}") Delete
 
     tfoot
       tr
@@ -65,9 +69,28 @@ block content
           | Provider
         th 
           | 
-  
+          
   a(href="/admin/users/create").btn.btn-primary Create
-
+  
+  - var nPages = Math.ceil(nUsers / 10);
+  - var i = 0;
+  
+  if nPages > 0
+    nav.pull-right
+      ul.pagination
+        li(class=(activePage == 0) ? 'disabled' : '')
+          a(href="/admin/users/#{activePage-1}", aria-label="Previous")
+            span(aria-hidden="true") &laquo;
+            
+        while i < nPages   
+          li(class=(i == activePage) ? 'active' : '')
+            a(href="/admin/users?page=#{i}")
+              | #{++i} 
+                
+        li(class=(activePage < nPages-1) ? '' : 'disabled')
+          a(href="/admin/users/#{activePage+1}", aria-label="Next")
+            span(aria-hidden="true") &raquo;
+              
 block appendjs
   script.
     window.csrf = '#{csrfToken}';

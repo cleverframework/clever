@@ -15,8 +15,8 @@ function hasErrors(err) {
       case 11000: {}
       case 11001: {
         modelErrors.push({
-          msg: 'Username already taken',
-          param: 'username'
+          msg: 'Email already used',
+          param: 'email'
         });
         break;
       }
@@ -127,16 +127,32 @@ UserSchema.pre('save', function(next) {
 // Static Methods
 UserSchema.statics = {
   /**
+   * CountUsers - return the number of users
+   *
+   * @return {Object}
+   * @api public
+   */
+  countUsers: function() {
+    const User = mongoose.model('User');
+    const defer = Q.defer();
+    User.count({}, function(err, nUsers) {
+      if (err) return defer.reject(err);
+      return defer.resolve(nUsers);
+    });
+    return defer.promise;
+  },
+
+  /**
    * GetUsers - return the list of users
    *
-   * @param {Integer} start
+   * @param {Integer} skip
    * @param {Integer} limit
    * @return {Object}
    * @api public
    */
-  getUsers: function(start, limit) {
+  getUsers: function(skip, limit) {
     const User = mongoose.model('User');
-    const options = start && limit ? {skip: start, limit: limit} : {};
+    const options = skip && limit ? {skip: skip, limit: limit} : {};
     const defer = Q.defer();
     User.find({}, {}, options, function(err, users) {
       if (err) return defer.reject(err);
@@ -177,9 +193,22 @@ UserSchema.statics = {
 
     function save(user) {
       Object.keys(userParams).forEach(function (key, index) {
-        if(key==='admin' && userParams[key] === '1') return user['role'].push('admin');
+        if(key==='admin') return; // handle this later
         user[key] = userParams[key];
       });
+
+      // Push 'admin' into user.roles if and only if userParams.admin === 1
+      // and user.roles.indexOf('admin') === -1
+      // Pull 'admin' from user.roles if userParams.admin !== -1
+      // and user.roles.indexOf('admin') > -1
+      const adminPos = user.roles.indexOf('admin');
+
+      if(userParams.hasOwnProperty('admin') && adminPos === -1) {
+        user.roles.push('admin');
+      } else if(!userParams.hasOwnProperty('admin') && adminPos > -1) {
+        user.roles.splice(adminPos, 1);
+      }
+
       user.save(function(err) {
         const errors = hasErrors(err);
         if(errors) return defer.reject(errors);

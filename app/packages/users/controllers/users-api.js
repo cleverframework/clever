@@ -53,7 +53,20 @@ exports.createUser = function(req, res, next) {
 
 // Edit user by id
 exports.editUserById = function(req, res, next) {
-  // TODO: validation
+
+  // Optionals
+  req.assert('firstName', 'You must enter your first name').optional().notEmpty();
+  req.assert('lastName', 'You must enter your last name').optional().notEmpty();
+  req.assert('firstName', 'Firstname cannot be more than 32 characters').optional().len(1, 32);
+  req.assert('lastName', 'Lastname cannot be more than 32 characters').optional().len(1, 32);
+  req.assert('email', 'You must enter a valid email address').optional().isEmail();
+  req.assert('password', 'Password must be between 8-20 characters long').optional().len(8, 20);
+
+  const errors = req.validationErrors();
+  if (errors) {
+    return res.status(400).json(errors);
+  }
+
   User.editUserById(req.params.id, req.body)
     .then(util.sendObjectAsHttpResponse.bind(null, res, 202))
     .catch(util.sendObjectAsHttpResponse.bind(null, res, 400));

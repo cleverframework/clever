@@ -9,7 +9,7 @@ export default (app) => {
         location.href = `${options.urlCallback}/${data._id}`;
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        // Show the errors to the user
+        // Show the errors to the setting
         options.$errorMessage.html(`${jqXHR.responseJSON[0].msg}.`);
         options.$error.removeClass('hidden');
 
@@ -23,64 +23,64 @@ export default (app) => {
     console.log(`${app.config.name} started`);
   });
 
-  app.on('createUser', (form) => {
+  app.on('createSetting', (form) => {
 
-    const $createUserError = $('#createUserError');
-    const $createUserBtn = $('#createUserBtn');
+    const $createSettingError = $('#createSettingError');
+    const $createSettingBtn = $('#createSettingBtn');
     const options = {
       formURL: $(form).attr('action'),
       method: $(form).attr('method'),
       postData: $(form).serialize(),
-      urlCallback: '/admin/users',
-      $error: $createUserError,
-      $errorMessage: $('#createUserError .message'),
-      $btn: $createUserBtn
+      urlCallback: '/admin/settings',
+      $error: $createSettingError,
+      $errorMessage: $('#createSettingError .message'),
+      $btn: $createSettingBtn
     }
 
     // Clear the error message div
-    $createUserError.addClass('hidden');
+    $createSettingError.addClass('hidden');
 
     // Send Ajax
     sendDataAjax(options);
 
     // Disable the submit form button
-    $createUserBtn.addClass('disabled');
+    $createSettingBtn.addClass('disabled');
 
   });
 
-  app.on('editUser', (form) => {
+  app.on('editSetting', (form) => {
 
-    const $editUserError = $('#editUserError');
-    const $editUserBtn = $('#editUserBtn');
+    const $editSettingError = $('#editSettingError');
+    const $editSettingBtn = $('#editSettingBtn');
     const options = {
       formURL: $(form).attr('action'),
       method: $(form).attr('method'),
       postData: $(form).serialize(),
-      urlCallback: '/admin/users',
-      $error: $editUserError,
-      $errorMessage: $('#editUserError .message'),
-      $btn: $editUserBtn
+      urlCallback: '/admin/settings',
+      $error: $editSettingError,
+      $errorMessage: $('#editSettingError .message'),
+      $btn: $editSettingBtn
     }
 
     // Clear the error message div
-    $editUserError.addClass('hidden');
+    $editSettingError.addClass('hidden');
 
     // Send Ajax
     sendDataAjax(options);
 
     // Disable the submit form button
-    $editUserBtn.addClass('disabled');
+    $editSettingBtn.addClass('disabled');
 
   });
 
-  app.on('deleteUser', (btn) => {
+  app.on('deleteSetting', (btn) => {
 
-    if(!confirm('Are you sure to want delete this user?')) return false;
+    if(!confirm('Are you sure to want delete this setting?')) return false;
 
     const $btn = $(btn);
 
     const request = $.ajax({
-      url: `/api/users/${$btn.data('id')}`,
+      url: `/api/system/settings/${$btn.data('id')}`,
       beforeSend: function (request) {
         request.setRequestHeader('csrf-token', window.csrf);
       },
@@ -89,6 +89,7 @@ export default (app) => {
 
     request.done(function(msg) {
       if(window.urlreload) return location.href = window.urlreload;
+      location.reload();
     });
 
     request.fail(function( jqXHR, textStatus ) {

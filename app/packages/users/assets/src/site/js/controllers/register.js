@@ -1,12 +1,17 @@
 export default (app) => {
 
-  $('#createUser').submit(function(e) {
+  function callListener(e, eventName) {
     // STOP default action
     e.preventDefault();
     e.stopImmediatePropagation();
 
-    // Emit createUser event
-    app.emit('createUser', this);
+    // Emit event
+    console.log(`Emit: ${eventName}`);
+    app.emit(eventName, this);
+  }
+
+  $('#createUser').submit(function(e) {
+    callListener.call(this, e, 'createUser');
   });
 
   return app;
