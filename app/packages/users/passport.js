@@ -8,7 +8,10 @@ let GitHubStrategy = require('passport-github').Strategy;
 let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 let LinkedinStrategy = require('passport-linkedin').Strategy;
 let User = mongoose.model('User');
-let config = require('clever-core').loadConfig();
+const config = require('clever-core').loadConfig();
+const settings = CleverCore.loadSettings();
+
+// TODO: Add the possibility to use settings instead hardcoded config
 
 module.exports = function(passport) {
   // Serialize the user id to push into the session
