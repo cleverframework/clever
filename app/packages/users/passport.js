@@ -9,7 +9,7 @@ let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 let LinkedinStrategy = require('passport-linkedin').Strategy;
 let User = mongoose.model('User');
 const config = require('clever-core').loadConfig();
-const settings = CleverCore.loadSettings();
+const settings = require('clever-core').loadSettings();
 
 // TODO: Add the possibility to use settings instead hardcoded config
 

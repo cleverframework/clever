@@ -13,6 +13,9 @@ let config = clever.loadConfig();
 
 module.exports = function(app, db) {
 
+  // Trust proxy
+  app.enable('trust proxy');
+
   // Adds logging based on logging config in config/env/ entry
   require('./middlewares/logging')(app, config.logging);
 
