@@ -15,7 +15,7 @@ exports.showUsers = function(UserPackage, req, res, next) {
 
   function renderUserList(users, nUsers) {
     res.send(UserPackage.render('admin/list', {
-      packages: UserPackage.getCleverCore().getInstance().exportable_packages_list,
+      packages: UserPackage.getCleverCore().getInstance().exportablePkgList,
       user: req.user,
       users: users,
       nUsers: nUsers,
@@ -49,7 +49,7 @@ exports.showUsers = function(UserPackage, req, res, next) {
 exports.showUser = function(UserPackage, req, res, next) {
   function render(userToShow) {
     res.send(UserPackage.render('admin/details', {
-      packages: UserPackage.getCleverCore().getInstance().exportable_packages_list,
+      packages: UserPackage.getCleverCore().getInstance().exportablePkgList,
       user: req.user,
       userToShow: userToShow,
       csrfToken: req.csrfToken()
@@ -63,7 +63,7 @@ exports.showUser = function(UserPackage, req, res, next) {
 
 exports.createUser = function(UserPackage, req, res, next) {
   res.send(UserPackage.render('admin/create', {
-    packages: UserPackage.getCleverCore().getInstance().exportable_packages_list,
+    packages: UserPackage.getCleverCore().getInstance().exportablePkgList,
     user: req.user,
     csrfToken: req.csrfToken()
   }));
@@ -73,7 +73,7 @@ exports.editUser = function(UserPackage, req, res, next) {
   function render(userToEdit) {
     const viewPath = req.params.opt === 'change-password' ? `admin/${req.params.opt}` : `admin/edit`
     res.send(UserPackage.render(viewPath, {
-      packages: UserPackage.getCleverCore().getInstance().exportable_packages_list,
+      packages: UserPackage.getCleverCore().getInstance().exportablePkgList,
       user: req.user,
       userToEdit: userToEdit,
       csrfToken: req.csrfToken()

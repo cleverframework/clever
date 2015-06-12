@@ -11,7 +11,8 @@ module.exports = {
     debug: false
   },
   app: {
-    name: 'CLEVER Framework - Development'
+    name: 'CLEVER Framework - Development',
+    url: 'http://localhost:3000'
   },
   cookieDomain: '.impero-cms.dev',
   facebook: {

@@ -12,7 +12,7 @@ const util = require('../util');
 exports.showDashboard = function(SystemPackage, req, res) {
   // Always use Package.render()
   res.send(SystemPackage.render('admin/dashboard', {
-    packages: SystemPackage.getCleverCore().getInstance().exportable_packages_list,
+    packages: SystemPackage.getCleverCore().getInstance().exportablePkgList,
     user: req.user
   }));
 };
@@ -27,7 +27,7 @@ exports.showSettings = function(SettingPackage, req, res, next) {
 
   function renderSettingList(settings, nSettings) {
     res.send(SettingPackage.render('admin/settings/list', {
-      packages: SettingPackage.getCleverCore().getInstance().exportable_packages_list,
+      packages: SettingPackage.getCleverCore().getInstance().exportablePkgList,
       user: req.user,
       settings: settings,
       nSettings: nSettings,
@@ -61,7 +61,7 @@ exports.showSettings = function(SettingPackage, req, res, next) {
 exports.showSetting = function(SettingPackage, req, res, next) {
   function render(settingToShow) {
     res.send(SettingPackage.render('admin/settings/details', {
-      packages: SettingPackage.getCleverCore().getInstance().exportable_packages_list,
+      packages: SettingPackage.getCleverCore().getInstance().exportablePkgList,
       user: req.user,
       settingToShow: settingToShow,
       csrfToken: req.csrfToken()
@@ -75,7 +75,7 @@ exports.showSetting = function(SettingPackage, req, res, next) {
 
 exports.createSetting = function(SettingPackage, req, res, next) {
   res.send(SettingPackage.render('admin/settings/create', {
-    packages: SettingPackage.getCleverCore().getInstance().exportable_packages_list,
+    packages: SettingPackage.getCleverCore().getInstance().exportablePkgList,
     user: req.user,
     csrfToken: req.csrfToken()
   }));
@@ -84,7 +84,7 @@ exports.createSetting = function(SettingPackage, req, res, next) {
 exports.editSetting = function(SettingPackage, req, res, next) {
   function render(settingToEdit) {
     res.send(SettingPackage.render(`admin/settings/edit`, {
-      packages: SettingPackage.getCleverCore().getInstance().exportable_packages_list,
+      packages: SettingPackage.getCleverCore().getInstance().exportablePkgList,
       user: req.user,
       settingToEdit: settingToEdit,
       csrfToken: req.csrfToken()
@@ -101,7 +101,7 @@ exports.editSetting = function(SettingPackage, req, res, next) {
 
 exports.showHelp = function(SystemPackage, req, res) {
   res.send(SystemPackage.render('admin/help', {
-    packages: SystemPackage.getCleverCore().getInstance().exportable_packages_list,
+    packages: SystemPackage.getCleverCore().getInstance().exportablePkgList,
     user: req.user
   }));
 };

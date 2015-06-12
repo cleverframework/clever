@@ -14,7 +14,7 @@ block content
 			input#inputPassword.form-control(type="password", name="password", placeholder="Password", value="", required="")
 			.checkbox
 				label
-					input(type="checkbox", value="automatic-login", checked="checked")
+					input(type="checkbox", name="automatic_login", value="1", checked="checked")
 					|	Automatic login
 			input(type="hidden", name="_csrf", value="#{csrfToken}")
 			button.btn.btn-lg.btn-primary.btn-block(id="createUserBtn", type="submit") Sign in
@@ -25,9 +25,9 @@ block content
 				span.message
 					| No Errors
 			p
-				a(href="/users/forgot", class="") Forgot your password?
+				a(href="/forgot-password", class="") Forgot your password?
 			p
-				a(href="/users/login", class="") Login
+				a(href="/login", class="") Login
 
 block appendcss
 	link(rel="stylesheet", href="/public/users/site/index.css")

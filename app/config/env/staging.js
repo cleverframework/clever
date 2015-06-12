@@ -9,7 +9,8 @@ module.exports = {
     format: 'common'
   },
   app: {
-    name: 'CLEVER - Staging'
+    name: 'CLEVER - Staging',
+    url: 'http://localhost:3000'
   },
   cookieDomain: 'clever.stg.impero.me',
   facebook: {

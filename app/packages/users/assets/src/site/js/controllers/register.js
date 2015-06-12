@@ -14,5 +14,9 @@ export default (app) => {
     callListener.call(this, e, 'createUser');
   });
 
+  $('#resetPassword').submit(function(e) {
+    callListener.call(this, e, 'resetPassword');
+  });
+
   return app;
 }

@@ -48,5 +48,32 @@ export default (app) => {
 
   });
 
+  app.on('resetPassword', (form) => {
+
+    const $resetPasswordError = $('#resetPasswordError');
+    const $resetPasswordBtn = $('#resetPasswordBtn');
+    const options = {
+      formURL: $(form).attr('action'),
+      method: $(form).attr('method'),
+      postData: $(form).serialize(),
+      successCallback: function(data, textStatus, jqXHR) {
+        location.href = '/';
+      },
+      $error: $resetPasswordError,
+      $errorMessage: $('#resetPasswordError .message'),
+      $btn: $resetPasswordBtn
+    }
+
+    // Clear the error message div
+    $resetPasswordError.addClass('hidden');
+
+    // Send Ajax
+    sendDataAjax(options);
+
+    // Disable the submit form button
+    $resetPasswordBtn.addClass('disabled');
+
+  });
+
   return app;
 }

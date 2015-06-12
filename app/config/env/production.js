@@ -27,7 +27,8 @@ module.exports = {
     */
   },
   app: {
-    name: 'Clever Framework - Production'
+    name: 'Clever Framework - Production',
+    url: 'http://localhost:3000'
   },
   cookieDomain: 'clever.prd.impero.me',
   logging: {

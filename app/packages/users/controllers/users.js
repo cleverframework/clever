@@ -7,7 +7,7 @@ const async = require('async');
 const config = require('clever-core').loadConfig();
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const templates = require('../template');
+const jade = require('jade');
 const util = require('../util');
 
 // Find user by id
@@ -63,6 +63,11 @@ exports.createUser = function(UserPackage, req, res, next) {
   }
 
   function automaticLogin(user) {
+
+    if(!req.body.automatic_login) {
+      return res.status(200).json(user);
+    }
+
     req.logIn(user, function(err) {
       if (err) return next(err);
       return res.status(200).json(user);
@@ -115,7 +120,6 @@ exports.resetPassword = function(req, res, next) {
       });
     }
     req.assert('password', 'Password must be between 8-20 characters long').len(8, 20);
-    req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
     var errors = req.validationErrors();
     if (errors) {
       return res.status(400).send(errors);
@@ -126,7 +130,7 @@ exports.resetPassword = function(req, res, next) {
     user.save(function(err) {
       req.logIn(user, function(err) {
         if (err) return next(err);
-        return res.send({
+        return res.json({
           user: user
         });
       });
@@ -143,8 +147,19 @@ function sendMail(mailOptions) {
   });
 }
 
+// Show forgot password form
+exports.forgotPassword = function(UserPackage, req, res) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  res.send(UserPackage.render('site/forgot-password', {
+    csrfToken: req.csrfToken(),
+    message: null
+  }));
+};
+
 // Callback for forgot password link
-exports.forgotPassword = function(req, res, next) {
+exports.sendResetPasswordEmail = function(req, res, next) {
   async.waterfall([
       function(done) {
         crypto.randomBytes(20, function(err, buf) {
@@ -154,11 +169,7 @@ exports.forgotPassword = function(req, res, next) {
       },
       function(token, done) {
         User.findOne({
-          $or: [{
-            email: req.body.text
-          }, {
-            username: req.body.text
-          }]
+          email: req.body.email
         }, function(err, user) {
           if (err || !user) return done(true);
           done(err, user, token);
