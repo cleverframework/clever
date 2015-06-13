@@ -7,6 +7,9 @@ export default (app) => {
       data : options.postData,
       success: options.successCallback,
       error: function(jqXHR, textStatus, errorThrown) {
+
+        if(options.$success) options.$success.addClass('hidden');
+
         // Show the errors to the user
         options.$errorMessage.html(`${jqXHR.responseJSON[0].msg}.`);
         options.$error.removeClass('hidden');
@@ -50,6 +53,8 @@ export default (app) => {
 
   app.on('resetPassword', (form) => {
 
+    const $inputEmail = $('#inputEmail');
+    const $resetPasswordSuccess = $('#resetPasswordSuccess');
     const $resetPasswordError = $('#resetPasswordError');
     const $resetPasswordBtn = $('#resetPasswordBtn');
     const options = {
@@ -57,8 +62,11 @@ export default (app) => {
       method: $(form).attr('method'),
       postData: $(form).serialize(),
       successCallback: function(data, textStatus, jqXHR) {
-        location.href = '/';
+        $inputEmail.val('');
+        $resetPasswordSuccess.removeClass('hidden');
+        $resetPasswordBtn.removeClass('disabled');
       },
+      $success: $resetPasswordSuccess,
       $error: $resetPasswordError,
       $errorMessage: $('#resetPasswordError .message'),
       $btn: $resetPasswordBtn

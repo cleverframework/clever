@@ -3,11 +3,13 @@
 // Module dependencies.
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Q = require('q');
 const async = require('async');
 const config = require('clever-core').loadConfig();
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const jade = require('jade');
+const fs = require('fs');
 const util = require('../util');
 
 // Find user by id
@@ -103,6 +105,7 @@ exports.session = function(req, res) {
 
 // Resets the password
 exports.resetPassword = function(req, res, next) {
+
   User.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: {
@@ -120,7 +123,7 @@ exports.resetPassword = function(req, res, next) {
       });
     }
     req.assert('password', 'Password must be between 8-20 characters long').len(8, 20);
-    var errors = req.validationErrors();
+    let errors = req.validationErrors();
     if (errors) {
       return res.status(400).send(errors);
     }
@@ -140,11 +143,15 @@ exports.resetPassword = function(req, res, next) {
 
 // Send reset password email
 function sendMail(mailOptions) {
-  var transport = nodemailer.createTransport(config.mailer);
+  const defer = Q.defer();
+
+  const transport = nodemailer.createTransport(config.mailer);
   transport.sendMail(mailOptions, function(err, response) {
-    if (err) return err;
-    return response;
+    if (err) return defer.reject(err);
+    defer.resolve(response);
   });
+
+  return defer.promise;
 }
 
 // Show forgot password form
@@ -160,10 +167,17 @@ exports.forgotPassword = function(UserPackage, req, res) {
 
 // Callback for forgot password link
 exports.sendResetPasswordEmail = function(req, res, next) {
+
+  req.assert('email', 'You must enter a valid email address').isEmail();
+  const errors = req.validationErrors();
+  if (errors) {
+    return res.status(400).json(errors);
+  }
+
   async.waterfall([
       function(done) {
         crypto.randomBytes(20, function(err, buf) {
-          var token = buf.toString('hex');
+          let token = buf.toString('hex');
           done(err, token);
         });
       },
@@ -183,25 +197,48 @@ exports.sendResetPasswordEmail = function(req, res, next) {
         });
       },
       function(token, user, done) {
-        var mailOptions = {
+
+        const html = jade.renderFile(`${__dirname}/../emails/forgot-password.jade`, {
+            user: user,
+            req: req,
+            token: token,
+            config: config
+        });
+
+        fs.writeFileSync('/Users/jacopodaeli/Desktop/test.html', html);
+
+        const mailOptions = {
           to: user.email,
-          from: config.emailFrom
+          from: config.emailFrom,
+          subject: 'Your instructions to reset your password', // Subject line
+          text: token,
+          html: html
         };
-        mailOptions = templates.forgot_password_email(user, req, token, mailOptions);
-        sendMail(mailOptions);
-        done(null, true);
+
+        // mailOptions = templates.forgot_password_email(user, req, token, mailOptions);
+        sendMail(mailOptions)
+          .then(function(response) {
+            // jacopo.daeli@gmail.com
+            console.log(response);
+            done(null, true);
+          })
+          .catch(function(err) {
+            console.error(err);
+            done(err, false);
+          });
+
       }
     ],
     function(err, status) {
-      var response = {
-        message: 'Mail successfully sent',
-        status: 'success'
+      const response = {
+        msg: 'Mail successfully sent',
+        status: '202'
       };
       if (err) {
-        response.message = 'User does not exist';
-        response.status = 'danger';
+        response.msg = 'User does not exist';
+        response.status = '400';
       }
-      res.json(response);
+      res.status(response.status).json([response]);
     }
   );
 };
