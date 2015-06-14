@@ -14,8 +14,12 @@ export default (app) => {
     callListener.call(this, e, 'createUser');
   });
 
-  $('#resetPassword').submit(function(e) {
-    callListener.call(this, e, 'resetPassword');
+  $('#sendResetPasswordEmail').submit(function(e) {
+    callListener.call(this, e, 'sendResetPasswordEmail');
+  });
+
+  $('#setNewPassword').submit(function(e) {
+    callListener.call(this, e, 'setNewPassword');
   });
 
   return app;

@@ -51,35 +51,62 @@ export default (app) => {
 
   });
 
-  app.on('resetPassword', (form) => {
+  app.on('setNewPassword', (form) => {
+
+    const $setNewPasswordError = $('#setNewPasswordError');
+    const $setNewPasswordBtn = $('#setNewPasswordBtn');
+    const options = {
+      formURL: $(form).attr('action'),
+      method: $(form).attr('method'),
+      postData: $(form).serialize(),
+      successCallback: function(data, textStatus, jqXHR) {
+        location.href = '/';
+      },
+      $error: $setNewPasswordError,
+      $errorMessage: $('#setNewPasswordError .message'),
+      $btn: $setNewPasswordBtn
+    }
+
+    // Clear the error message div
+    $setNewPasswordError.addClass('hidden');
+
+    // Send Ajax
+    sendDataAjax(options);
+
+    // Disable the submit form button
+    $setNewPasswordBtn.addClass('disabled');
+
+  });
+
+  app.on('sendResetPasswordEmail', (form) => {
 
     const $inputEmail = $('#inputEmail');
-    const $resetPasswordSuccess = $('#resetPasswordSuccess');
-    const $resetPasswordError = $('#resetPasswordError');
-    const $resetPasswordBtn = $('#resetPasswordBtn');
+    const $sendResetPasswordEmailSuccess = $('#sendResetPasswordEmailSuccess');
+    const $sendResetPasswordEmailError = $('#sendResetPasswordEmailError');
+    const $sendResetPasswordEmailBtn = $('#sendResetPasswordEmailBtn');
     const options = {
       formURL: $(form).attr('action'),
       method: $(form).attr('method'),
       postData: $(form).serialize(),
       successCallback: function(data, textStatus, jqXHR) {
         $inputEmail.val('');
-        $resetPasswordSuccess.removeClass('hidden');
-        $resetPasswordBtn.removeClass('disabled');
+        $sendResetPasswordEmailSuccess.removeClass('hidden');
+        $sendResetPasswordEmailBtn.removeClass('disabled');
       },
-      $success: $resetPasswordSuccess,
-      $error: $resetPasswordError,
-      $errorMessage: $('#resetPasswordError .message'),
-      $btn: $resetPasswordBtn
+      $success: $sendResetPasswordEmailSuccess,
+      $error: $sendResetPasswordEmailError,
+      $errorMessage: $('#sendResetPasswordEmailError .message'),
+      $btn: $sendResetPasswordEmailBtn
     }
 
     // Clear the error message div
-    $resetPasswordError.addClass('hidden');
+    $sendResetPasswordEmailError.addClass('hidden');
 
     // Send Ajax
     sendDataAjax(options);
 
     // Disable the submit form button
-    $resetPasswordBtn.addClass('disabled');
+    $sendResetPasswordEmailBtn.addClass('disabled');
 
   });
 

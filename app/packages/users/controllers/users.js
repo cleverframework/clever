@@ -103,8 +103,8 @@ exports.session = function(req, res) {
   res.redirect('/');
 };
 
-// Resets the password
-exports.resetPassword = function(req, res, next) {
+// Reset the password
+exports.setNewPassword = function(req, res, next) {
 
   User.findOne({
     resetPasswordToken: req.params.token,
@@ -118,9 +118,10 @@ exports.resetPassword = function(req, res, next) {
       });
     }
     if (!user) {
-      return res.status(400).json({
-        msg: 'Token invalid or expired'
-      });
+      return res.status(400).json([{
+        msg: 'Token invalid or expired',
+        status: 400
+      }]);
     }
     req.assert('password', 'Password must be between 8-20 characters long').len(8, 20);
     let errors = req.validationErrors();
@@ -133,7 +134,7 @@ exports.resetPassword = function(req, res, next) {
     user.save(function(err) {
       req.logIn(user, function(err) {
         if (err) return next(err);
-        return res.json({
+        return res.status(202).json({
           user: user
         });
       });
@@ -162,6 +163,17 @@ exports.forgotPassword = function(UserPackage, req, res) {
   res.send(UserPackage.render('site/forgot-password', {
     csrfToken: req.csrfToken(),
     message: null
+  }));
+};
+
+// Show set new password form
+exports.resetPassword = function(UserPackage, req, res) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  res.send(UserPackage.render('site/reset', {
+    csrfToken: req.csrfToken(),
+    token: req.params.token
   }));
 };
 
@@ -205,20 +217,16 @@ exports.sendResetPasswordEmail = function(req, res, next) {
             config: config
         });
 
-        fs.writeFileSync('/Users/jacopodaeli/Desktop/test.html', html);
-
         const mailOptions = {
           to: user.email,
           from: config.emailFrom,
-          subject: 'Your instructions to reset your password', // Subject line
-          text: token,
+          subject: 'Reset your password', // Subject line
+          text: require('../emails/forgot-password')(user, config, token),
           html: html
         };
 
-        // mailOptions = templates.forgot_password_email(user, req, token, mailOptions);
         sendMail(mailOptions)
           .then(function(response) {
-            // jacopo.daeli@gmail.com
             console.log(response);
             done(null, true);
           })

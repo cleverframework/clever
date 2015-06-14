@@ -24,14 +24,17 @@ module.exports = function(UserPackage, app, auth, database, passport) {
   // Logout user
   router.get('/logout', usersCtrl.signout);
 
-  // Display reset password form
+  // Display `email` reset password form
   router.get('/forgot-password', usersCtrl.forgotPassword.bind(null, UserPackage));
 
   // Send email for reset password
   router.post('/forgot-password', usersCtrl.sendResetPasswordEmail);
 
+  // Display `password` reset password form
+  router.get('/reset/:token', usersCtrl.resetPassword.bind(null, UserPackage));
+
   // Reset user password
-  router.get('/reset/:token', usersCtrl.resetPassword);
+  router.post('/reset/:token', usersCtrl.setNewPassword);
 
   // Show login form
   router.get('/login', usersCtrl.login.bind(null, UserPackage));
