@@ -60,6 +60,7 @@ export default (app) => {
       method: $(form).attr('method'),
       postData: $(form).serialize(),
       successCallback: function(data, textStatus, jqXHR) {
+        $setNewPasswordBtn.removeClass('disabled');
         location.href = '/';
       },
       $error: $setNewPasswordError,
