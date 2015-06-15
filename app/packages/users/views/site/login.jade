@@ -15,6 +15,12 @@ block content
 			input(type="hidden", name="_csrf", value="#{csrfToken}")
 			button.btn.btn-lg.btn-primary.btn-block(type="submit") Sign in
 			br
+			.center(style="text-align: center") or
+			br
+			a.btn.btn-lg.btn-social.btn-facebook.btn-block(href="/auth/facebook") 
+				i.fa.fa-facebook 
+				| Sign in with Facebook
+			br
 			if message != ''
 				div(class="alert alert-danger", role="alert")
 					b

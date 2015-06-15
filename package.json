@@ -21,8 +21,8 @@
     "npm": "2.9.0"
   },
   "scripts": {
-    "pretest": "npm install",
-    "test": "./node_modules/mocha-6to5/bin/mocha test",
+    "build": "npm install && ./make",
+    "test": "./node_modules/mocha/bin/mocha test",
     "prestart": "npm install",
     "start": "node --harmony app/server"
   },
@@ -42,8 +42,13 @@
     "q": "^1.2.0"
   },
   "devDependencies": {
+    "autoprefixer-stylus": "^0.7.0",
+    "babelify": "^6.1.2",
+    "browserify": "^10.2.4",
     "chai": "^2.1.2",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "stylus": "^0.51.1",
+    "stylus-mixins": "^0.2.1"
   },
   "license": "MIT"
 }

@@ -7,7 +7,6 @@ const async = require('async');
 const config = require('clever-core').loadConfig();
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const templates = require('../template');
 const util = require('../util');
 
 // Send logged user

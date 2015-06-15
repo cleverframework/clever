@@ -10,6 +10,5 @@
 - Build in image cropper
 
 ## Users Package
-- Password reset
 - Profile
 - Account
