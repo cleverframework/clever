@@ -32,3 +32,6 @@ dist
 
 # System
 .DS_Store
+
+# Contrib pkgs
+app/packages/ssh-auth
