@@ -15,6 +15,9 @@ let usersCtrl = require('../controllers/users');
 // Exports
 module.exports = function(UserPackage, app, auth, database, passport) {
 
+  // Show user profile
+  router.get('/profile', usersCtrl.profile.bind(null, UserPackage));
+
   // Show registration form
   router.get('/register', usersCtrl.register.bind(null, UserPackage));
 

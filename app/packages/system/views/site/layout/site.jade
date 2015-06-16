@@ -1,8 +1,11 @@
+block vars
+  - var bodyClass = ''
+  
 doctype html
 html
   head
     include ../components/head.jade
-  body
+  body(class="#{bodyClass}")
     nav(class="navbar navbar-inverse navbar-fixed-top")
       div(class="container")
         div(class="navbar-header")

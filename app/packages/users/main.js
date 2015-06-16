@@ -13,7 +13,7 @@ UsersPackage.register(function(app, auth, database, passport) {
   require('./passport')(passport);
 
   UsersPackage.routes(app, auth, database, passport);
-
+  
   return UsersPackage;
 
 });

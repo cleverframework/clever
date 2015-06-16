@@ -29,6 +29,17 @@ exports.authCallback = function(req, res) {
   res.redirect('/');
 };
 
+// Show user profile
+exports.profile = function(UserPackage, req, res) {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login');
+  }
+  res.send(UserPackage.render('site/profile', {
+    me: req.user,
+    csrfToken: req.csrfToken()
+  }));
+};
+
 // Show login form
 exports.signin = function(req, res) {
   if (req.isAuthenticated()) {
