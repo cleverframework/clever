@@ -6,6 +6,7 @@ babelify=../../../node_modules/babelify/index.js
 stylus=../../../node_modules/stylus/bin/stylus
 autoprefixer=../../../node_modules/autoprefixer-stylus
 mixins=../../../node_modules/stylus-mixins
+bower=../../../node_modules/bower/bin/bower
 
 for file in app/packages/*
 do
@@ -23,7 +24,7 @@ do
   echo "Installing" $pkg
   cd $file
   npm install --quiet
-  bower install --quiet
+  $bower install --quiet
 
   # Coping vendor folder
   if [ -d $src/vendor ]; then
