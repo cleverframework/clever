@@ -8,12 +8,12 @@ let Package = cleverCore.Package;
 let UsersPackage = new Package('users');
 
 // Package registration
-UsersPackage.register(function(app, auth, database, passport) {
+UsersPackage.register(function(app, auth, database, passport, userMenu) {
 
   require('./passport')(passport);
 
-  UsersPackage.routes(app, auth, database, passport);
-  
+  UsersPackage.routes(app, auth, database, passport, userMenu);
+
   return UsersPackage;
 
 });

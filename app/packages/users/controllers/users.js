@@ -29,15 +29,34 @@ exports.authCallback = function(req, res) {
   res.redirect('/');
 };
 
+// Used for settings sub menu test
+// exports.settingsSubMenuTest = function(UserPackage, userMenu, req, res, next) {
+//   if (!req.isAuthenticated()) {
+//     return res.redirect('/login');
+//   }
+//   userMenu.render(UserPackage.getCleverCore().getInstance(), req, function(err, renderedUserMenu) {
+//     if(err) return next(err);
+//
+//     res.send(UserPackage.render('site/settings-sub', {
+//       user: req.user,
+//       userMenu: renderedUserMenu
+//     }));
+//   });
+// };
+
 // Show user profile
-exports.profile = function(UserPackage, req, res) {
+exports.settingsProfile = function(UserPackage, userMenu, req, res, next) {
   if (!req.isAuthenticated()) {
     return res.redirect('/login');
   }
-  res.send(UserPackage.render('site/profile', {
-    me: req.user,
-    csrfToken: req.csrfToken()
-  }));
+  userMenu.render(UserPackage.getCleverCore().getInstance(), req, function(err, renderedUserMenu) {
+    if(err) return next(err);
+    res.send(UserPackage.render('site/settings-profile', {
+      user: req.user,
+      userMenu: renderedUserMenu,
+      csrfToken: req.csrfToken()
+    }));
+  });
 };
 
 // Show login form

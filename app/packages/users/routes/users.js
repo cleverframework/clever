@@ -13,10 +13,18 @@ let config = CleverCore.loadConfig();
 let usersCtrl = require('../controllers/users');
 
 // Exports
-module.exports = function(UserPackage, app, auth, database, passport) {
+module.exports = function(UserPackage, app, auth, database, passport, userMenu) {
 
-  // Show user profile
-  router.get('/profile', usersCtrl.profile.bind(null, UserPackage));
+  // Redirect to setting user profile if no settings is specified
+  router.get('/settings', function(req, res) {
+    res.redirect('/settings/profile');
+  });
+
+  // Show setting user profile
+  router.get('/settings/profile', usersCtrl.settingsProfile.bind(null, UserPackage, userMenu));
+
+  // Show setting sub menu test
+  // router.get('/settings/sub/opt1', usersCtrl.settingsSubMenuTest.bind(null, UserPackage, userMenu));
 
   // Show registration form
   router.get('/register', usersCtrl.register.bind(null, UserPackage));

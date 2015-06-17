@@ -1,66 +1,27 @@
-// Defining menus
+'use strict';
 
-class MenuElement {
-  constructor(name, ref, order) {
-    this.name = name || 'Untitled';
-    this.ref = ref || '#';
-    this.order = order || -1
-  }
+const cleverCore = require('clever-core');
+const Menu = cleverCore.Menu;
 
-  toJSON() {
-    return {
-      name: this.name,
-      ref:  this.ref,
-      order: this.order
-    }
-  }
-}
+const userMenu = new Menu('user');
 
-class Menu {
-  constructor(name) {
-    this.name = name;
-    this.elements = [];
-    this.fn = null;
-    this.rendered = null;
-  }
+// const subTestMenu = new Menu('subTest');
+// subTestMenu.addElement('Option 1', '/settings/sub/opt1', 1);
+// subTestMenu.addElement('Option 2', '/settings/sub/opt2', 2);
 
-  addElement(name, ref, order) {
-    this.elements.push(new Menu.MenuElement(name, ref, order));
-  }
+userMenu.addElement('Profile', '/settings/profile', 1);
+userMenu.addElement('Account Settings', '/settings/account', 2);
 
-  render(config, database) {
+// userMenu.addElement('Sub Menu', '/settings/sub', 3, function(cleverCore, req, defer, menuEl) {
+//   cleverCore.resolve('subTestMenu', function(subTestMenu) {
+//     const parent = menuEl; // just to remember how to use my function
+//     subTestMenu.render(cleverCore, req, function(err, rendredSubTestMenu) {
+//       if(err) return defer.reject(err);
+//       menuEl.sub = rendredSubTestMenu;
+//       defer.resolve();
+//     }, parent);
+//   });
+// });
 
-    // Caching the rendered
-    if(this.rendered) return this.rendered;
-
-    this.rendered = {};
-    this.rendered.name = this.name;
-
-    const fnElements = [];
-
-    if(this.fn) {
-      const rawElements = this.fn(config, database);
-      rawElements.forEach(function (el, index) {
-        fnElements.push(new Menu.MenuElement(el.name, el.ref, el.order));
-      });
-    }
-
-    this.rendered.elements = this.elements.concat(fnElements);
-
-    return this.rendered;
-
-  }
-
-  deleteCache() {
-    this.rendered = null;
-  }
-
-}
-
-Menu.MenuElement = MenuElement;
-
-const menus = {};
-
-
-
-module.exports = menus;
+exports.user = userMenu;
+// exports.subTest = subTestMenu;
