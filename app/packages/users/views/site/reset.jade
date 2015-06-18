@@ -1,22 +1,22 @@
 extends ../../../system/views/site/layout/site
 
 block content
-	.container
-		form.form-signin(id="setNewPassword", action="/reset/#{token}", method="POST", autocomplete="off")
-			h2.form-signin-heading Forgot password
-			label.sr-only(for="inputEmail") New Password
-			input#inputEmail.form-control(type="password", name="password", placeholder="Password", value="", required="")
-			input(type="hidden", name="_csrf", value="#{csrfToken}")
-			button.btn.btn-lg.btn-primary.btn-block(id="setNewPasswordBtn", type="submit") Reset
-			br
-			div#setNewPasswordError(class="alert alert-danger hidden", role="alert")
-				b
-					|	Ops! 
-				span.message
-					| No Errors
-					
+  .container
+    form.form-signin(id="setNewPassword", action="/reset/#{token}", method="POST", autocomplete="off")
+      h2.form-signin-heading Forgot password
+      label.sr-only(for="inputEmail") New Password
+      input#inputEmail.form-control(type="password", name="password", placeholder="Password", value="", required="")
+      input(type="hidden", name="_csrf", value="#{csrfToken}")
+      button.btn.btn-lg.btn-primary.btn-block(id="setNewPasswordBtn", type="submit") Reset
+      br
+      div#setNewPasswordError(class="alert alert-danger hidden", role="alert")
+        b
+          |  Ops! 
+        span.message
+          | No Errors
+          
 block appendcss
-	link(rel="stylesheet", href="/public/users/site/index.css")
-		
+  link(rel="stylesheet", href="/public/users/site/index.css")
+    
 block appendjs
-	script(src="/public/users/site/index.js")
+  script(src="/public/users/site/index.js")

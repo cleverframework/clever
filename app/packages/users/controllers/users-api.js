@@ -50,7 +50,7 @@ exports.createUser = function(req, res, next) {
     .catch(util.sendObjectAsHttpResponse.bind(null, res, 400));
 };
 
-// Edit user by id
+// Edit user logged user id
 exports.editUserById = function(req, res, next) {
 
   // Optionals
@@ -69,6 +69,20 @@ exports.editUserById = function(req, res, next) {
   User.editUserById(req.params.id, req.body)
     .then(util.sendObjectAsHttpResponse.bind(null, res, 202))
     .catch(util.sendObjectAsHttpResponse.bind(null, res, 400));
+};
+
+// Edit logged user
+exports.editLoggedUser = function(req, res, next) {
+  if(!req.isAuthenticated()) {
+    return res.status(401).json([{
+      message: 'User Unauthorized',
+      status: 401
+    }]);
+  }
+
+  req.params.id = req.user._id;
+  req.body.admin = req.user.isAdmin();
+  exports.editUserById(req, res, next);
 };
 
 // Delete user by id

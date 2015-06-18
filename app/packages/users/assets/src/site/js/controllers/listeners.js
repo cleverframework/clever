@@ -51,34 +51,6 @@ export default (app) => {
 
   });
 
-  app.on('setNewPassword', (form) => {
-
-    const $setNewPasswordError = $('#setNewPasswordError');
-    const $setNewPasswordBtn = $('#setNewPasswordBtn');
-    const options = {
-      formURL: $(form).attr('action'),
-      method: $(form).attr('method'),
-      postData: $(form).serialize(),
-      successCallback: function(data, textStatus, jqXHR) {
-        $setNewPasswordBtn.removeClass('disabled');
-        location.href = '/';
-      },
-      $error: $setNewPasswordError,
-      $errorMessage: $('#setNewPasswordError .message'),
-      $btn: $setNewPasswordBtn
-    }
-
-    // Clear the error message div
-    $setNewPasswordError.addClass('hidden');
-
-    // Send Ajax
-    sendDataAjax(options);
-
-    // Disable the submit form button
-    $setNewPasswordBtn.addClass('disabled');
-
-  });
-
   app.on('sendResetPasswordEmail', (form) => {
 
     const $inputEmail = $('#inputEmail');
@@ -108,6 +80,64 @@ export default (app) => {
 
     // Disable the submit form button
     $sendResetPasswordEmailBtn.addClass('disabled');
+
+  });
+
+  app.on('setNewPassword', (form) => {
+
+    const $setNewPasswordError = $('#setNewPasswordError');
+    const $setNewPasswordBtn = $('#setNewPasswordBtn');
+    const options = {
+      formURL: $(form).attr('action'),
+      method: $(form).attr('method'),
+      postData: $(form).serialize(),
+      successCallback: function(data, textStatus, jqXHR) {
+        $setNewPasswordBtn.removeClass('disabled');
+        location.href = '/';
+      },
+      $error: $setNewPasswordError,
+      $errorMessage: $('#setNewPasswordError .message'),
+      $btn: $setNewPasswordBtn
+    }
+
+    // Clear the error message div
+    $setNewPasswordError.addClass('hidden');
+
+    // Send Ajax
+    sendDataAjax(options);
+
+    // Disable the submit form button
+    $setNewPasswordBtn.addClass('disabled');
+
+  });
+
+  app.on('updateSettingsProfile', (form) => {
+
+    const $updateSettingsProfileSuccess = $('#updateSettingsProfileSuccess');
+    const $updateSettingsProfileError = $('#updateSettingsProfileError');
+    const $updateSettingsProfileBtn = $('#updateSettingsProfileBtn');
+    const options = {
+      formURL: $(form).attr('action'),
+      method: $(form).attr('method'),
+      postData: $(form).serialize(),
+      successCallback: function(data, textStatus, jqXHR) {
+        $updateSettingsProfileSuccess.removeClass('hidden');
+        $updateSettingsProfileBtn.removeClass('disabled');
+      },
+      $success: $updateSettingsProfileSuccess,
+      $error: $updateSettingsProfileError,
+      $errorMessage: $('#updateSettingsProfileError .message'),
+      $btn: $updateSettingsProfileBtn
+    }
+
+    // Clear the error message div
+    $updateSettingsProfileError.addClass('hidden');
+
+    // Send Ajax
+    sendDataAjax(options);
+
+    // Disable the submit form button
+    $updateSettingsProfileBtn.addClass('disabled');
 
   });
 

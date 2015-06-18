@@ -10,6 +10,7 @@ const Q = require('q');
 // Mongoose Error Handling
 function hasErrors(err) {
   if (err) {
+    console.log(err);
     let modelErrors = [];
     switch (err.code) {
       case 11000: {}
@@ -187,11 +188,13 @@ UserSchema.statics = {
    * @api public
    */
   editUserById: function(id, userParams) {
+
     if(!id) throw new Error('User.editUserById: id parameter is mandatory');
     const User = mongoose.model('User');
     const defer = Q.defer();
 
     function save(user) {
+
       Object.keys(userParams).forEach(function (key, index) {
         if(key==='admin') return; // handle this later
         user[key] = userParams[key];
@@ -202,10 +205,11 @@ UserSchema.statics = {
       // Pull 'admin' from user.roles if userParams.admin !== -1
       // and user.roles.indexOf('admin') > -1
       const adminPos = user.roles.indexOf('admin');
+      const hasAdmin = Object.prototype.hasOwnProperty.call(userParams, 'admin');
 
-      if(userParams.hasOwnProperty('admin') && adminPos === -1) {
+      if(hasAdmin && adminPos === -1) {
         user.roles.push('admin');
-      } else if(!userParams.hasOwnProperty('admin') && adminPos > -1) {
+      } else if(!hasAdmin && adminPos > -1) {
         user.roles.splice(adminPos, 1);
       }
 

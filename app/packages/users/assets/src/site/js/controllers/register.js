@@ -22,5 +22,9 @@ export default (app) => {
     callListener.call(this, e, 'setNewPassword');
   });
 
+  $('#updateSettingsProfile').submit(function(e) {
+    callListener.call(this, e, 'updateSettingsProfile');
+  });
+
   return app;
 }

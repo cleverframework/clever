@@ -20,7 +20,7 @@ block content
             
               
         .col-sm-9
-          form#updateProfile.col-sm-8(method="PUT", action="/api/users/#{user._id}", autocomplete="off")
+          form#updateSettingsProfile.col-sm-8(method="PUT", action="/api/users/me", autocomplete="off")
             .form-group
                 label(for="inputFirstName") First Name
                 |     
@@ -38,18 +38,24 @@ block content
               |   
             input(type="hidden", name="_csrf", value="#{csrfToken}")
             |   
-            button#updateProfileBtn.btn.btn-success(type="submit") Save
+            button#updateSettingsProfileBtn.btn.btn-success(type="submit") Save
             br
             br
-            div#updateProfileError(class="alert alert-danger hidden", role="alert")
+            div#updateSettingsProfileError(class="alert alert-danger hidden", role="alert")
               b
                 |	Ops! 
               span.message
                 | No Errors
+            div#updateSettingsProfileSuccess(class="alert alert-success hidden", role="alert")
+              b
+                |	Amazing! 
+              span.message
+                | Your profile has been updated.
+          
+
 
 block appendcss
   link(rel="stylesheet", href="/public/users/site/index.css")
 
 block appendjs
-  //
-    script(src="/public/users/site/index.js")
+  script(src="/public/users/site/index.js")

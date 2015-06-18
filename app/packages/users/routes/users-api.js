@@ -24,6 +24,9 @@ module.exports = function(UserPackage, app, auth, database, passport) {
   // Return logged user
   router.get('/me', usersApiCtrl.me);
 
+  // Edit logged user
+  router.put('/me', usersApiCtrl.editLoggedUser);
+
   // Get users
   router.get('/', usersApiCtrl.getUsers);
 
