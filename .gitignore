@@ -33,5 +33,9 @@ dist
 # System
 .DS_Store
 
-# Contrib pkgs
-app/packages/ssh-auth
+# CLEVER core pkgs
+app/packages/something
+
+# CLEVER network pkgs
+app/packages/users-ssh
+app/packages/pkg-manager

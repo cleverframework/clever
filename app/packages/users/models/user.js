@@ -240,9 +240,9 @@ UserSchema.statics = {
     if(!id) throw new Error('User.deleteUserById: id parameter is mandatory');
     const User = mongoose.model('User');
     const defer = Q.defer();
-    User.remove({_id: id}, function(err, user) {
+    User.remove({_id: id}, function(err, result) {
       if (err) return defer.reject(err);
-      return defer.resolve(user);
+      return defer.resolve(result);
     });
     return defer.promise;
   },

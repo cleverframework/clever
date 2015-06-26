@@ -66,5 +66,18 @@ module.exports = {
       user: 'EMAIL_ID',
       pass: 'PASSWORD'
     }
+  },
+  uploader: {
+    service: 'local',
+    services: {
+      local: {
+        dir: 'path/to/upload/folder',
+        maxFileSize: -1,
+      },
+      aws: {
+        accessKeyId: 'ACCESS_KEY_ID',
+        secretAccessKey: 'SECRET_ACCESS_KEY'
+      }
+    }
   }
 };

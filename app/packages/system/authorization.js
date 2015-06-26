@@ -11,6 +11,14 @@ exports.requiresLogin = function(req, res, next) {
   next();
 };
 
+// Require login routing middleware with root redirect
+exports.requiresLoginRedirect = function(req, res, next) {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  next();
+};
+
 // Generic require Admin routing middleware
 // Basic Role checking
 exports.requiresAdmin = function(req, res, next) {

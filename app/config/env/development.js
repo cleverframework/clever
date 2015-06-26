@@ -40,12 +40,25 @@ module.exports = {
     clientSecret: 'SECRET_KEY',
     callbackURL: 'http://localhost:3000/auth/linkedin/callback'
   },
-  emailFrom: 'SENDER EMAIL ADDRESS', // sender address like ABC <abc@example.com>
+  emailFrom: 'no-reply@sendgrid.impero.me', // sender address like ABC <abc@example.com>
   mailer: {
-    service: 'SERVICE_PROVIDER',
+    service: 'Sendgrid', // Gmail, SMTP
     auth: {
-      user: 'EMAIL_ID',
-      pass: 'PASSWORD'
+      user: 'imperodesign',
+      pass: 'impero11'
+    }
+  },
+  uploader: {
+    service: 'local',
+    services: {
+      local: {
+        dir: 'path/to/upload/folder',
+        maxFileSize: -1,
+      },
+      aws: {
+        accessKeyId: 'ACCESS_KEY_ID',
+        secretAccessKey: 'SECRET_ACCESS_KEY'
+      }
     }
   }
 };
