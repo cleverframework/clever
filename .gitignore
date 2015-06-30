@@ -33,8 +33,8 @@ dist
 # System
 .DS_Store
 
-# CLEVER core pkgs
-app/packages/image-gallery
+# CLEVER contrib pkgs
+app/packages/something
 
 # CLEVER network pkgs
 app/packages/users-ssh

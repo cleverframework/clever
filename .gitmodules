@@ -1,0 +1,3 @@
+[submodule "app/packages/image-gallery"]
+	path = app/packages/image-gallery
+	url = git@github.com:imperodesign/clever-image-gallery.git
