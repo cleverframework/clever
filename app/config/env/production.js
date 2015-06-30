@@ -67,11 +67,12 @@ module.exports = {
       pass: 'PASSWORD'
     }
   },
-  uploader: {
-    service: 'local',
-    services: {
+  storage: {
+    strategy: 'local',
+    volumeName: 'clever-storage',
+    strategies: {
       local: {
-        dir: 'path/to/upload/folder',
+        dir: `${__dirname}/../../../storage`,
         maxFileSize: -1,
       },
       aws: {

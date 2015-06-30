@@ -16,8 +16,8 @@ module.exports = {
   },
   cookieDomain: '.impero-cms.dev',
   facebook: {
-    clientID: '570817389722371',
-    clientSecret: '244f599f92257ffa3cb2a647d1dc1226',
+    clientID: 'DEFAULT_CONSUMER_KEY',
+    clientSecret: 'CONSUMER_SECRET',
     callbackURL: 'http://localhost:3000/auth/facebook/callback'
   },
   twitter: {
@@ -40,19 +40,20 @@ module.exports = {
     clientSecret: 'SECRET_KEY',
     callbackURL: 'http://localhost:3000/auth/linkedin/callback'
   },
-  emailFrom: 'no-reply@sendgrid.impero.me', // sender address like ABC <abc@example.com>
+  emailFrom: 'clever@example.com', // sender address like ABC <abc@example.com>
   mailer: {
-    service: 'Sendgrid', // Gmail, SMTP
+    service: 'SERVICE', // Gmail, SMTP
     auth: {
-      user: 'imperodesign',
-      pass: 'impero11'
+      user: 'USER_ID',
+      pass: 'PASSWORD'
     }
   },
-  uploader: {
-    service: 'local',
-    services: {
+  storage: {
+    strategy: 'local',
+    volumeName: 'clever-storage',
+    strategies: {
       local: {
-        dir: 'path/to/upload/folder',
+        dir: `${__dirname}/../../../storage`,
         maxFileSize: -1,
       },
       aws: {
