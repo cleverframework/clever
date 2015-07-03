@@ -1,9 +1,9 @@
-[submodule "app/packages/image-gallery"]
-	path = app/packages/image-gallery
-	url = git@github.com:imperodesign/clever-image-gallery.git
 [submodule "app/packages/system"]
 	path = app/packages/system
 	url = git@github.com:imperodesign/clever-system.git
 [submodule "app/packages/users"]
 	path = app/packages/users
 	url = git@github.com:imperodesign/clever-users.git
+[submodule "app/packages/image-galleries"]
+	path = app/packages/image-galleries
+	url = https://github.com/imperodesign/clever-image-galleries
