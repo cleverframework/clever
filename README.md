@@ -25,8 +25,13 @@ $ clever init <myApp>
 ### Compiling packages
 If you wish to (re)compile the clever packages manually, run:
 ```
-$ sh make
+$ sh make all
 ```
+to (re)compile every package, or
+```
+$ sh make pkgName1 pkgName2
+```
+to recompile only specifics packages.
 
 ### Running clever
 To run clever just run from your terminal:

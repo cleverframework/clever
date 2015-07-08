@@ -8,6 +8,7 @@ autoprefixer=../../../node_modules/autoprefixer-stylus
 mixins=../../../node_modules/stylus-mixins
 bower=../../../node_modules/bower/bin/bower
 
+
 for file in app/packages/*
 do
 
@@ -16,53 +17,69 @@ do
   pkg=${file/app\/packages\/}
   src=./assets/src
   dist=./assets/dist
+  inarray=0
 
-  # Cleaning
-  rm -rf $file/assets/dist
-  mkdir $file/assets/dist
-
-  echo "Installing" $pkg
-  cd $file
-  npm install --quiet
-  $bower install --quiet
-
-  # Coping vendor folder
-  if [ -d $src/vendor ]; then
-    cp -rf $src/vendor $dist/vendor
+  if test "$1" == "all"; then
+    inarray=1
+  else
+    for p in "$@"
+    do
+      if test "$p" == "$pkg"; then
+        inarray=1
+        break
+      fi
+    done
   fi
 
-  # Compiling admin
-  if [ -d $src/admin ]; then
-    mkdir $dist/admin
+  if test "$inarray" == "1"; then
 
-    if [ -d $src/admin/img ]; then
-      cp -rf $src/admin/img $dist/admin/img
+    # Cleaning
+    rm -rf $file/assets/dist
+    mkdir $file/assets/dist
+
+    echo "Installing" $pkg
+    cd $file
+    npm install --quiet
+    $bower install --quiet
+
+    # Coping vendor folder
+    if [ -d $src/vendor ]; then
+      cp -rf $src/vendor $dist/vendor
     fi
 
-    if [ -d $src/admin/js ]; then
-      $browserify $src/admin/js/index.js -t $babelify --outfile $dist/admin/index.js
+    # Compiling admin
+    if [ -d $src/admin ]; then
+      mkdir $dist/admin
+
+      if [ -d $src/admin/img ]; then
+        cp -rf $src/admin/img $dist/admin/img
+      fi
+
+      if [ -d $src/admin/js ]; then
+        $browserify $src/admin/js/index.js -t $babelify --outfile $dist/admin/index.js
+      fi
+
+      if [ -d $src/admin/styl ]; then
+        $stylus $src/admin/styl/index.styl -o $dist/admin/index.css -u $autoprefixer -u $mixins
+      fi
+
     fi
 
-    if [ -d $src/admin/styl ]; then
-      $stylus $src/admin/styl/index.styl -o $dist/admin/index.css -u $autoprefixer -u $mixins
-    fi
+    # Compiling site
+    if [ -d $src/site ]; then
+      mkdir $dist/site
 
-  fi
+      if [ -d $src/site/img ]; then
+        cp -rf $src/site/img $dist/site/img
+      fi
 
-  # Compiling site
-  if [ -d $src/site ]; then
-    mkdir $dist/site
+      if [ -d $src/site/js ]; then
+        $browserify $src/site/js/index.js -t $babelify --outfile $dist/site/index.js
+      fi
 
-    if [ -d $src/site/img ]; then
-      cp -rf $src/site/img $dist/site/img
-    fi
-
-    if [ -d $src/site/js ]; then
-      $browserify $src/site/js/index.js -t $babelify --outfile $dist/site/index.js
-    fi
-
-    if [ -d $src/site/styl ]; then
-      $stylus $src/site/styl/index.styl -o $dist/site/index.css -u $autoprefixer -u $mixins
+      if [ -d $src/site/styl ]; then
+        $stylus $src/site/styl/index.styl -o $dist/site/index.css -u $autoprefixer -u $mixins
+      fi
     fi
 
   fi
