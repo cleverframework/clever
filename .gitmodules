@@ -10,6 +10,6 @@
 [submodule "app/packages/galleries"]
 	path = app/packages/galleries
 	url = https://github.com/imperodesign/clever-galleries
-[submodule "app/packages/pages"]
-	path = app/packages/pages
-	url = git@github.com:imperodesign/clever-pages.git
+[submodule "app/packages/articles"]
+	path = app/packages/articles
+	url = git@github.com:imperodesign/clever-articles.git

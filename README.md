@@ -9,7 +9,7 @@ CLEVER is a framework helping you build web applications quickly. It is designed
 
 ## Prerequisite packages
 
-* CLEVER currently has not prerequisite packages
+* CLEVER currently has no prerequisite packages
 
 ## Installation
 To start with CLEVER install the `clever-cli` package from NPM.
