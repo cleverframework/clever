@@ -3,11 +3,15 @@
 current=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 browserify=../../../node_modules/browserify/bin/cmd.js
 babelify=../../../node_modules/babelify/index.js
+jadeify=../../../node_modules/jadeify/lib/jadeify.js
 stylus=../../../node_modules/stylus/bin/stylus
 autoprefixer=../../../node_modules/autoprefixer-stylus
 mixins=../../../node_modules/stylus-mixins
 bower=../../../node_modules/bower/bin/bower
 
+cd $current
+echo "Installing application packages"
+npm install --quit
 
 for file in app/packages/*
 do
@@ -56,7 +60,7 @@ do
       fi
 
       if [ -d $src/admin/js ]; then
-        $browserify $src/admin/js/index.js -t $babelify --outfile $dist/admin/index.js
+        $browserify $src/admin/js/index.js -t $babelify -t $jadeify --outfile $dist/admin/index.js
       fi
 
       if [ -d $src/admin/styl ]; then
