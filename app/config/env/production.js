@@ -2,6 +2,7 @@
 
 module.exports = {
   db: `mongodb://${(process.env.DB_PORT_27017_TCP_ADDR || 'localhost')}/clever-prod`,
+  debug: false,
   /**
    * Database options that will be passed directly to mongoose.connect
    * Below are some examples.
