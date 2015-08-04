@@ -49,6 +49,7 @@
     "bower": "^1.4.1",
     "browserify": "^10.2.4",
     "chai": "^2.1.2",
+    "deamdify": "^0.1.1",
     "mocha": "^2.2.5",
     "stylus": "^0.51.1",
     "stylus-mixins": "^0.2.1"

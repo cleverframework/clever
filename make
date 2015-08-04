@@ -4,6 +4,7 @@ current=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 browserify=../../../node_modules/browserify/bin/cmd.js
 babelify=../../../node_modules/babelify/index.js
 jadeify=../../../node_modules/jadeify/lib/jadeify.js
+deamdify=../../../node_modules/deamdify/index.js
 stylus=../../../node_modules/stylus/bin/stylus
 autoprefixer=../../../node_modules/autoprefixer-stylus
 mixins=../../../node_modules/stylus-mixins
@@ -60,7 +61,7 @@ do
       fi
 
       if [ -d $src/admin/js ]; then
-        $browserify $src/admin/js/index.js -t $babelify -t $jadeify --outfile $dist/admin/index.js
+        $browserify $src/admin/js/index.js -t $babelify -t $jadeify -g $deamdify --outfile $dist/admin/index.js
       fi
 
       if [ -d $src/admin/styl ]; then
