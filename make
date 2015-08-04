@@ -10,9 +10,9 @@ autoprefixer=../../../node_modules/autoprefixer-stylus
 mixins=../../../node_modules/stylus-mixins
 bower=../../../node_modules/bower/bin/bower
 
-cd $current
-echo "Installing application packages"
-npm install --quit
+# cd $current
+# # echo "Installing application packages"
+# # npm install --quit
 
 for file in app/packages/*
 do
