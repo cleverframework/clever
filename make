@@ -45,7 +45,8 @@ do
     echo "Installing" $pkg
     cd $file
     npm install --quiet
-    $bower install --quiet
+    export CI=true
+    $bower install --config.interactive=false --quiet
 
     # Coping vendor folder
     if [ -d $src/vendor ]; then
