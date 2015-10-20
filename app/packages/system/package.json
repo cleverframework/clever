@@ -1,0 +1,10 @@
+{
+  "name": "system",
+  "version": "0.1.0",
+  "visible": false,
+  "author": "Jacopo Daeli <jacopo.daeli@gmail.com>",
+  "clever": "0.1.x",
+  "dependencies": {
+
+  }
+}

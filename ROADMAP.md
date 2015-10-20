@@ -2,13 +2,4 @@
 
 # ROADMAP
 
-## System Package
-- Admin Settings
-- Admin Help
-- Admin Module enabling/disabling + details
-- Build-in file uploader
-- Build in image cropper
-
-## Users Package
-- Profile
-- Account
+Build Clever V1
