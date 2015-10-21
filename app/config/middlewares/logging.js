@@ -1,21 +1,16 @@
-// globals require
+'use strict'
 
-(function () {
-  'use strict';
+const morgan = require('morgan')
 
-  let morgan = require('morgan');
+module.exports = function(app, config) {
+  let format, options
 
-  module.exports = function(app, config) {
-    let format, options;
+  if (config !== false) {
+    config = config || {}
 
-    if (config !== false) {
-      config = config || {};
+    format  = config.format || 'dev'
+    options = config.options || {}
 
-      format  = config.format || 'dev';
-      options = config.options || {};
-
-      app.use(morgan(format, options));
-    }
-  };
-
-})();
+    app.use(morgan(format, options))
+  }
+}
