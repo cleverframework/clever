@@ -2,4 +2,5 @@
 
 # ROADMAP
 
-Build Clever V1
+- Create Authentication, Storage packages for Clever V1
+- Build new `clever-cli` npm module
