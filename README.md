@@ -12,6 +12,6 @@ $ npm start
 
 ## News
 
-21/10/2015: Clever V1 is now available for testing. The new version uses Sequelize with Postgres instead Mongoose. Authentication, Storage, Settings are not pre-bubndled anymore and they have to be installed manually.
+21/10/2015: Clever V1 is now available for testing. The new version uses Sequelize with Postgres instead Mongoose. Authentication, Storage, Settings packages are not pre-bubndled anymore within Clever skeleton and they have to be installed manually.
 
 12/10/2015: [IMPERO](http://www.weareimpero.com) and [Jacopo Daeli](http://www.jacopodaeli.com) officially start working on Clever V1.
