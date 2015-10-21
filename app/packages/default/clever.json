@@ -1,8 +1,7 @@
 {
-  "name": "system",
+  "name": "default",
   "version": "0.1.0",
   "author": "Jacopo Daeli <jacopo.daeli@gmail.com>",
   "dependencies": {
-
   }
 }
