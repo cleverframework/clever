@@ -22,7 +22,8 @@
   },
   "scripts": {
     "prestart": "npm install",
-    "start": "node --harmony app/server"
+    "start": "node --harmony app/server",
+    "devstart": "./node_modules/nodemon/bin/nodemon.js app/server"
   },
   "dependencies": {
     "clever-core": "git+ssh://git@github.com/imperodesign/clever-core.git#development",
@@ -32,6 +33,8 @@
     "express": "^4.13.3",
     "morgan": "^1.6.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.8.0"
+  },
   "license": "MIT"
 }
