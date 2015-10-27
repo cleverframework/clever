@@ -1,1 +1,1 @@
-app/packages/views
+app/packages/default/views
