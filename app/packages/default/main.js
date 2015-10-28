@@ -9,7 +9,7 @@ var DefaultPackage = new Package('default')
 // All CLEVER packages require registration
 DefaultPackage
   .attach({
-    where: '/'
+    where: '/default'
   })
   .routes(['app', 'config', 'awesome'])
   .models()

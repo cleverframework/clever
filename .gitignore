@@ -34,6 +34,8 @@ dist
 app/packages/users-api
 app/packages/users-admin
 app/packages/dashboard-admin
+app/packages/pages-api
+app/packages/pages-admin
 
 # System
 .DS_Store
