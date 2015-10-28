@@ -21,6 +21,9 @@ const config = {
     }
   },
   auth: {
+    jwt: {
+      cookie: 'cleverv1.jwt'
+    },
     passport: {
       enable: true
     }

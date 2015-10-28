@@ -33,6 +33,7 @@ dist
 # Packages
 app/packages/users-api
 app/packages/users-admin
+app/packages/dashboard-admin
 
 # System
 .DS_Store
