@@ -2,17 +2,13 @@
 'use strict'
 
 // Module dependencies.
-const clever = require('clever-core')
 const compression = require('compression')
-const morgan = require('morgan')
-const express = require('express')
 const flash = require('connect-flash')
 const csrf = require('csurf')
 
 // const config = clever.loadConfig()
 
-module.exports = function(app, config, db) {
-
+module.exports = function (app, config, db) {
   // Trust proxy
   app.enable('trust proxy')
 
@@ -37,5 +33,4 @@ module.exports = function(app, config, db) {
 
   // Csfr token
   if (config.csrf.enable) app.use(csrf())
-
 }
