@@ -26,12 +26,14 @@
     "devstart": "./node_modules/nodemon/bin/nodemon.js app/server"
   },
   "dependencies": {
+    "busboy": "^0.2.12",
     "clever-core": "git+ssh://git@github.com/imperodesign/clever-core.git#development",
     "compression": "^1.6.0",
     "connect-flash": "^0.1.1",
     "csurf": "^1.8.3",
     "express": "^4.13.3",
-    "morgan": "^1.6.1"
+    "morgan": "^1.6.1",
+    "shortid": "^2.2.4"
   },
   "devDependencies": {
     "nodemon": "^1.8.0"
