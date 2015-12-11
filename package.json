@@ -22,7 +22,7 @@
   },
   "scripts": {
     "prestart": "npm install",
-    "start": "node --harmony app/server",
+    "start": "node app/server",
     "devstart": "./node_modules/nodemon/bin/nodemon.js app/server"
   },
   "dependencies": {
@@ -36,7 +36,7 @@
     "shortid": "^2.2.4"
   },
   "devDependencies": {
-    "nodemon": "^1.8.0"
+    "nodemon": "^1.8.1"
   },
   "license": "MIT"
 }
