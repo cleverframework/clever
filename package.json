@@ -32,7 +32,9 @@
     "connect-flash": "^0.1.1",
     "csurf": "^1.8.3",
     "express": "^4.13.3",
+    "float": "^1.0.2",
     "morgan": "^1.6.1",
+    "request": "^2.67.0",
     "shortid": "^2.2.4"
   },
   "devDependencies": {
